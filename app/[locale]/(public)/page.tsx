@@ -30,7 +30,7 @@ export default async function HomePage({
   const supabase = createPublicClient();
   const { data: destacadas } = await supabase
     .from('propiedades')
-    .select('*, propiedad_fotos(*)')
+    .select('id, referencia, titulo, precio, operacion, zona, tipo, estado, habitaciones, banos, metros, propiedad_fotos(url, es_portada, orden)')
     .eq('destacada', true)
     .eq('estado', 'disponible')
     .order('created_at', { ascending: false })

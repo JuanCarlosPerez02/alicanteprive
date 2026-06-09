@@ -80,7 +80,7 @@ export default async function PropiedadPage({
   const supabase = createPublicClient();
   const { data } = await supabase
     .from('propiedades')
-    .select('*, propiedad_fotos(*)')
+    .select('*, propiedad_fotos(url, es_portada, orden)')
     .eq('referencia', referencia)
     .neq('estado', 'oculta')
     .single();

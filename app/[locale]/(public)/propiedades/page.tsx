@@ -47,24 +47,44 @@ export default async function PropiedadesPage({
 
   const supabase = createPublicClient();
 
-  let query = supabase
-    .from('propiedades')
-    .select('*, propiedad_fotos(*)')
-    .neq('estado', 'oculta');
+  // Shared filter/sort logic applied to whichever query branch runs
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function withFilters(q: any): any {
+    if (sp.operacion) q = q.eq('operacion', sp.operacion);
+    if (sp.tipo) q = q.eq('tipo', sp.tipo);
+    if (sp.zona) q = q.ilike('zona', `%${sp.zona}%`);
+    if (sp.precio_min) q = q.gte('precio', Number(sp.precio_min));
+    if (sp.precio_max) q = q.lte('precio', Number(sp.precio_max));
+    if (sp.habitaciones) q = q.gte('habitaciones', Number(sp.habitaciones));
+    if (sp.orden === 'precio_asc') q = q.order('precio', { ascending: true });
+    else if (sp.orden === 'precio_desc') q = q.order('precio', { ascending: false });
+    else q = q.order('created_at', { ascending: false });
+    return q;
+  }
 
-  if (sp.operacion) query = query.eq('operacion', sp.operacion);
-  if (sp.tipo) query = query.eq('tipo', sp.tipo);
-  if (sp.zona) query = query.ilike('zona', `%${sp.zona}%`);
-  if (sp.precio_min) query = query.gte('precio', Number(sp.precio_min));
-  if (sp.precio_max) query = query.lte('precio', Number(sp.precio_max));
-  if (sp.habitaciones) query = query.gte('habitaciones', Number(sp.habitaciones));
+  let propiedades: Propiedad[];
 
-  if (sp.orden === 'precio_asc') query = query.order('precio', { ascending: true });
-  else if (sp.orden === 'precio_desc') query = query.order('precio', { ascending: false });
-  else query = query.order('created_at', { ascending: false });
-
-  const { data } = await query;
-  const propiedades: Propiedad[] = (data as Propiedad[]) ?? [];
+  if (isMapa) {
+    // Map view: only fields needed for markers + cover photo, pre-filter by coordinates
+    const { data } = await withFilters(
+      supabase
+        .from('propiedades')
+        .select('id, referencia, titulo, precio, operacion, zona, lat, lng, propiedad_fotos(url, es_portada, orden)')
+        .neq('estado', 'oculta')
+        .not('lat', 'is', null)
+        .not('lng', 'is', null)
+    );
+    propiedades = (data as unknown as Propiedad[]) ?? [];
+  } else {
+    // Grid view: fields needed by PropertyCard + cover photo
+    const { data } = await withFilters(
+      supabase
+        .from('propiedades')
+        .select('id, referencia, titulo, precio, operacion, zona, tipo, estado, habitaciones, banos, metros, propiedad_fotos(url, es_portada, orden)')
+        .neq('estado', 'oculta')
+    );
+    propiedades = (data as unknown as Propiedad[]) ?? [];
+  }
 
   // Build URL helpers for vista toggle (preserve all current filters)
   function buildUrl(vista: string) {
