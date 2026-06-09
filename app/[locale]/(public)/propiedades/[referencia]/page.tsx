@@ -107,7 +107,13 @@ export default async function PropiedadPage({
 
       {/* Gallery */}
       <div className="mb-8">
-        <PropertyGallery fotos={propiedad.propiedad_fotos ?? []} titulo={titulo} />
+        <PropertyGallery
+          fotos={propiedad.propiedad_fotos ?? []}
+          titulo={titulo}
+          zona={propiedad.zona ?? undefined}
+          tipo={propiedad.tipo}
+          operacion={propiedad.operacion}
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">

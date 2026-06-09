@@ -87,7 +87,7 @@ export default function PropertiesMapView({ properties }: Props) {
         });
 
         const imgHtml = p.coverUrl
-          ? `<img src="${p.coverUrl}" style="width:100%;height:110px;object-fit:cover;border-radius:3px 3px 0 0;display:block;" />`
+          ? `<img src="${p.coverUrl}" alt="${p.titulo}" style="width:100%;height:110px;object-fit:cover;border-radius:3px 3px 0 0;display:block;" />`
           : '';
 
         const popupHtml = `

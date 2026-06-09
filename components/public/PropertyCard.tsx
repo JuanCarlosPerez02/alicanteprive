@@ -19,6 +19,7 @@ const STATUS_BADGE: Record<string, string> = {
 export default function PropertyCard({ propiedad, locale }: Props) {
   const tProps = useTranslations('properties');
   const tOps = useTranslations('operations');
+  const tTypes = useTranslations('types');
 
   const coverUrl = getCoverPhoto(propiedad.propiedad_fotos ?? []);
   const titulo = getLocalizedText(propiedad.titulo, locale);
@@ -34,7 +35,7 @@ export default function PropertyCard({ propiedad, locale }: Props) {
         {coverUrl ? (
           <Image
             src={coverUrl}
-            alt={titulo}
+            alt={`${tTypes(propiedad.tipo as Parameters<typeof tTypes>[0])} en ${tOps(propiedad.operacion as Parameters<typeof tOps>[0]).toLowerCase()}${propiedad.zona ? ` en ${propiedad.zona}` : ' en Alicante'} — ${titulo}`}
             fill
             sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"

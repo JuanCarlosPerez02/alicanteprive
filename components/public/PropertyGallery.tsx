@@ -13,9 +13,12 @@ interface Photo {
 interface Props {
   fotos: Photo[];
   titulo: string;
+  zona?: string;
+  tipo?: string;
+  operacion?: string;
 }
 
-export default function PropertyGallery({ fotos, titulo }: Props) {
+export default function PropertyGallery({ fotos, titulo, zona, tipo, operacion }: Props) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [mobileIndex, setMobileIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -69,7 +72,7 @@ export default function PropertyGallery({ fotos, titulo }: Props) {
         >
           <Image
             src={sorted[mobileIndex].url}
-            alt={`${titulo} ${mobileIndex + 1}`}
+            alt={mobileIndex === 0 && zona ? `${tipo ?? ''} ${operacion ?? ''} en ${zona} — ${titulo}`.trim() : `${titulo} — foto ${mobileIndex + 1}`}
             fill
             sizes="100vw"
             className="object-cover"
@@ -125,7 +128,7 @@ export default function PropertyGallery({ fotos, titulo }: Props) {
         >
           <Image
             src={cover.url}
-            alt={titulo}
+            alt={zona ? `${tipo ?? ''} ${operacion ?? ''} en ${zona} — ${titulo}`.trim() : titulo}
             fill
             sizes="50vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -144,7 +147,7 @@ export default function PropertyGallery({ fotos, titulo }: Props) {
           >
             <Image
               src={foto.url}
-              alt={`${titulo} ${i + 2}`}
+              alt={`${titulo} — foto ${i + 2}`}
               fill
               sizes="25vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -196,7 +199,7 @@ export default function PropertyGallery({ fotos, titulo }: Props) {
           >
             <Image
               src={sorted[lightboxIndex].url}
-              alt={`${titulo} ${lightboxIndex + 1}`}
+              alt={`${titulo} — foto ${lightboxIndex + 1}`}
               fill
               sizes="90vw"
               className="object-contain"
