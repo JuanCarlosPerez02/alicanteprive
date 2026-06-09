@@ -90,6 +90,12 @@ export default function PropiedadForm({ propiedad, locale }: Props) {
   const [error, setError] = useState('');
   const [isDirty, setIsDirty] = useState(false);
   const [savedAt, setSavedAt] = useState<Date | null>(null);
+  const [coordsInput, setCoordsInput] = useState(() => {
+    const lat = propiedad?.lat;
+    const lng = propiedad?.lng;
+    return lat != null && lng != null ? `${lat}, ${lng}` : '';
+  });
+  const [coordsError, setCoordsError] = useState('');
 
   useEffect(() => {
     if (savedAt) {
@@ -140,6 +146,39 @@ export default function PropiedadForm({ propiedad, locale }: Props) {
       ? form.caracteristicas.filter((x) => x !== c)
       : [...form.caracteristicas, c]);
   };
+
+  function handleCoordsBlur() {
+    const raw = coordsInput.trim();
+    if (!raw) {
+      set('lat', '');
+      set('lng', '');
+      setCoordsError('');
+      return;
+    }
+    const parts = raw.split(',');
+    if (parts.length !== 2) {
+      setCoordsError('Formato incorrecto. Pega las coordenadas de Google Maps: 38.3780, -0.4285');
+      return;
+    }
+    const lat = parseFloat(parts[0].trim());
+    const lng = parseFloat(parts[1].trim());
+    if (isNaN(lat) || isNaN(lng)) {
+      setCoordsError('Los valores deben ser números decimales (usa punto, no coma)');
+      return;
+    }
+    if (lat < -90 || lat > 90) {
+      setCoordsError('Latitud fuera de rango (-90 a 90)');
+      return;
+    }
+    if (lng < -180 || lng > 180) {
+      setCoordsError('Longitud fuera de rango (-180 a 180)');
+      return;
+    }
+    set('lat', String(lat));
+    set('lng', String(lng));
+    setCoordsError('');
+    setCoordsInput(`${lat}, ${lng}`);
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -342,21 +381,28 @@ export default function PropiedadForm({ propiedad, locale }: Props) {
       {/* ── Ubicación ────────────────────────────── */}
       <section className="bg-card border border-border rounded-sm p-5">
         <h2 className="font-heading text-base font-semibold mb-4">Ubicación</h2>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className={labelClass}>Latitud</label>
-            <input type="number" step="any" value={form.lat} onChange={(e) => set('lat', e.target.value)}
-              className={inputClass} placeholder="38.3780" />
-          </div>
-          <div>
-            <label className={labelClass}>Longitud</label>
-            <input type="number" step="any" value={form.lng} onChange={(e) => set('lng', e.target.value)}
-              className={inputClass} placeholder="-0.4285" />
-          </div>
+        <div>
+          <label className={labelClass}>Coordenadas (Google Maps)</label>
+          <input
+            type="text"
+            value={coordsInput}
+            onChange={(e) => { setCoordsInput(e.target.value); setCoordsError(''); }}
+            onBlur={handleCoordsBlur}
+            className={`${inputClass} ${coordsError ? 'border-red-500 focus:ring-red-500' : ''}`}
+            placeholder="38.3547492509201, -0.47429455745097027"
+          />
+          {coordsError ? (
+            <p className="text-xs text-red-500 mt-1">{coordsError}</p>
+          ) : form.lat && form.lng ? (
+            <p className="text-xs text-emerald-600 mt-1">
+              ✓ Lat: {form.lat} · Lng: {form.lng}
+            </p>
+          ) : (
+            <p className="text-xs text-muted-foreground mt-1">
+              Abre Google Maps, haz clic derecho sobre la dirección y pega las coordenadas aquí.
+            </p>
+          )}
         </div>
-        <p className="text-xs text-muted-foreground mt-2">
-          Tip: busca la dirección en Google Maps, haz clic derecho y copia las coordenadas.
-        </p>
       </section>
 
       {/* ── Portales ─────────────────────────────── */}
