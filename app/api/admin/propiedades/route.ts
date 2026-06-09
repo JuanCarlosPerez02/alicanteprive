@@ -6,8 +6,8 @@ const schema = z.object({
   referencia: z.string().min(1),
   operacion: z.enum(['venta', 'alquiler']),
   tipo: z.string().min(1),
-  titulo: z.record(z.string()),
-  descripcion: z.record(z.string()),
+  titulo: z.record(z.string(), z.string()),
+  descripcion: z.record(z.string(), z.string()),
   precio: z.number().positive(),
   zona: z.string().optional(),
   direccion: z.string().optional(),
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ id: propiedad.id });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Datos inválidos', details: err.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Datos inválidos', details: err.issues }, { status: 400 });
     }
     console.error('[POST /api/admin/propiedades]', err);
     return NextResponse.json({ error: 'Error interno' }, { status: 500 });

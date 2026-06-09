@@ -235,7 +235,7 @@ export default function AnalyticsCharts({ data }: { data: AnalyticsData }) {
                   const item = payload[0];
                   return (
                     <div className="bg-card border border-border rounded-sm px-3 py-2 text-xs shadow-md">
-                      <p className="font-semibold">{INTERES_LABELS[item.name] ?? item.name}: {item.value}</p>
+                      <p className="font-semibold">{INTERES_LABELS[item.name as string] ?? item.name}: {item.value}</p>
                     </div>
                   );
                 }}

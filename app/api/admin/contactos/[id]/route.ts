@@ -53,7 +53,7 @@ export async function PUT(
     return NextResponse.json({ ok: true });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: err.errors[0].message }, { status: 400 });
+      return NextResponse.json({ error: err.issues[0].message }, { status: 400 });
     }
     console.error('[PUT /api/admin/contactos/:id]', err);
     return NextResponse.json({ error: 'Error interno' }, { status: 500 });
