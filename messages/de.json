@@ -1,0 +1,177 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "properties": "Immobilien",
+    "contact": "Kontakt",
+    "admin": "Admin"
+  },
+  "home": {
+    "hero": {
+      "title": "Exklusive Immobilien an der Costa Blanca",
+      "subtitle": "Ihr Luxusimmobilienexperte in Alicante",
+      "cta": "Immobilien ansehen",
+      "cta_contact": "Kontakt aufnehmen"
+    },
+    "featured_title": "Ausgewählte Immobilien",
+    "featured_subtitle": "Eine Auswahl unserer exklusivsten Immobilien",
+    "search_placeholder": "Lage, Referenz...",
+    "search_operation": "Art",
+    "search_submit": "Suchen"
+  },
+  "properties": {
+    "title": "Immobilien",
+    "subtitle": "Finden Sie Ihre Traumimmobilie an der Costa Blanca",
+    "filters": {
+      "operation": "Art",
+      "type": "Typ",
+      "zone": "Lage",
+      "price_range": "Preis",
+      "bedrooms": "Schlafzimmer",
+      "all_operations": "Alle",
+      "all_types": "Alle",
+      "all_zones": "Alle Lagen",
+      "min_price": "Min. Preis",
+      "max_price": "Max. Preis",
+      "any_bedrooms": "Beliebig",
+      "clear": "Filter löschen"
+    },
+    "sort": {
+      "label": "Sortieren",
+      "newest": "Neueste",
+      "price_asc": "Preis: aufsteigend",
+      "price_desc": "Preis: absteigend"
+    },
+    "results": "{count} Immobilien gefunden",
+    "no_results": "Keine Immobilien mit den gewählten Filtern gefunden.",
+    "beds": "Zi.",
+    "baths": "Bad",
+    "sqm": "m²",
+    "view": "Immobilie ansehen",
+    "status": {
+      "vendida": "Verkauft",
+      "alquilada": "Vermietet",
+      "reservada": "Reserviert",
+      "disponible": "Verfügbar"
+    }
+  },
+  "property": {
+    "details": "Details",
+    "features": "Ausstattung",
+    "location": "Lage",
+    "description": "Beschreibung",
+    "beds": "Schlafzimmer",
+    "baths": "Badezimmer",
+    "sqm": "Wohnfläche",
+    "price": "Preis",
+    "ref": "Ref.",
+    "zone": "Lage",
+    "type": "Typ",
+    "operation": "Art",
+    "contact_title": "Interessiert an dieser Immobilie?",
+    "contact_subtitle": "Kontaktieren Sie uns – wir beraten Sie unverbindlich.",
+    "gallery": "Fotogalerie",
+    "sold_label": "Verkauft",
+    "rented_label": "Vermietet",
+    "reserved_label": "Reserviert"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Wir helfen Ihnen dabei, Ihre Traumimmobilie zu finden.",
+    "name": "Vollständiger Name",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefon",
+    "message": "Nachricht",
+    "message_placeholder": "Sagen Sie uns, was Sie suchen...",
+    "send": "Nachricht senden",
+    "sending": "Wird gesendet...",
+    "success": "Nachricht gesendet! Wir melden uns in Kürze.",
+    "error": "Fehler beim Senden. Bitte versuchen Sie es erneut.",
+    "required": "Dieses Feld ist erforderlich",
+    "email_invalid": "Bitte geben Sie eine gültige E-Mail ein"
+  },
+  "admin": {
+    "login_title": "Admin-Zugang",
+    "login_subtitle": "Alicante Privé Verwaltungspanel",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "login": "Anmelden",
+    "logging_in": "Anmeldung...",
+    "login_error": "Falsche E-Mail oder falsches Passwort.",
+    "logout": "Abmelden",
+    "dashboard": "Dashboard",
+    "properties": "Immobilien",
+    "contacts": "Kontakte",
+    "messages": "Nachrichten",
+    "dashboard_title": "Dashboard",
+    "total_properties": "Immobilien gesamt",
+    "active_properties": "Verfügbar",
+    "new_contacts": "Neue Kontakte",
+    "unread_messages": "Ungelesene Nachrichten",
+    "pending_visits": "Ausstehende Besichtigungen"
+  },
+  "types": {
+    "piso": "Wohnung",
+    "casa": "Haus",
+    "atico": "Penthouse",
+    "villa": "Villa",
+    "local": "Gewerberaum",
+    "chalet": "Chalet",
+    "adosado": "Reihenhaus",
+    "duplex": "Maisonette",
+    "estudio": "Studio"
+  },
+  "operations": {
+    "venta": "Kauf",
+    "alquiler": "Miete"
+  },
+  "features": {
+    "ascensor": "Aufzug",
+    "terraza": "Terrasse",
+    "piscina": "Schwimmbad",
+    "garaje": "Garage",
+    "jardin": "Garten",
+    "aire_acondicionado": "Klimaanlage",
+    "calefaccion": "Heizung",
+    "trastero": "Abstellraum",
+    "portero": "Hausmeister",
+    "vistas_al_mar": "Meerblick",
+    "primera_linea": "Direkt am Strand",
+    "amueblado": "Möbliert",
+    "armarios": "Einbauschränke",
+    "exterior": "Außenbereich",
+    "luminoso": "Hell"
+  },
+  "common": {
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "view": "Ansehen",
+    "back": "Zurück",
+    "search": "Suchen",
+    "all": "Alle",
+    "yes": "Ja",
+    "no": "Nein",
+    "close": "Schließen",
+    "confirm": "Bestätigen",
+    "new": "Neu",
+    "add": "Hinzufügen",
+    "select": "Auswählen",
+    "noData": "Keine Daten"
+  },
+  "languages": {
+    "es": "Español",
+    "en": "English",
+    "fr": "Français",
+    "de": "Deutsch"
+  },
+  "meta": {
+    "site_name": "Alicante Privé",
+    "home_title": "Exklusive Immobilien an der Costa Blanca",
+    "home_description": "Luxusimmobilienagentur spezialisiert auf exklusive Immobilien in Alicante und der Costa Blanca.",
+    "properties_title": "Immobilien zu kaufen und mieten in Alicante",
+    "contact_title": "Kontakt — Alicante Privé"
+  }
+}

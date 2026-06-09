@@ -1,26 +1,110 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
+/* ── Brand fonts ────────────────────────────────────────────────── */
 @theme inline {
+  --font-heading: var(--font-playfair);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+
+  /* shadcn token bridge */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Alicante Privé — light palette ────────────────────────────── */
+:root {
+  /* Brand core */
+  --gold:              oklch(0.74 0.09 82);   /* champagne gold */
+  --gold-foreground:   oklch(0.17 0.03 85);   /* dark text on gold */
+  --navy:              oklch(0.17 0.045 250);  /* deep navy */
+  --cream:             oklch(0.98 0.008 85);   /* warm cream white */
+  --sand:              oklch(0.94 0.012 85);   /* sand / secondary bg */
+
+  /* shadcn semantic tokens → brand */
+  --background:        var(--cream);
+  --foreground:        var(--navy);
+  --card:              oklch(1 0 0);
+  --card-foreground:   var(--navy);
+  --popover:           oklch(1 0 0);
+  --popover-foreground: var(--navy);
+  --primary:           var(--navy);
+  --primary-foreground: var(--cream);
+  --secondary:         var(--sand);
+  --secondary-foreground: var(--navy);
+  --muted:             oklch(0.91 0.010 85);
+  --muted-foreground:  oklch(0.46 0.025 250);
+  --accent:            var(--gold);
+  --accent-foreground: var(--gold-foreground);
+  --destructive:       oklch(0.58 0.24 27);
+  --border:            oklch(0.88 0.008 85);
+  --input:             oklch(0.88 0.008 85);
+  --ring:              var(--gold);
+  --radius:            0.5rem;
+}
+
+/* ── Base layer ─────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading), Georgia, serif;
+    @apply tracking-tight;
+  }
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── Utility classes ─────────────────────────────────────────────── */
+@layer utilities {
+  .text-gold {
+    color: var(--gold);
+  }
+  .bg-gold {
+    background-color: var(--gold);
+  }
+  .border-gold {
+    border-color: var(--gold);
+  }
+  .font-heading {
+    font-family: var(--font-heading), Georgia, serif;
+  }
+  /* Premium card hover */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+  }
 }

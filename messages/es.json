@@ -1,0 +1,177 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "properties": "Propiedades",
+    "contact": "Contacto",
+    "admin": "Admin"
+  },
+  "home": {
+    "hero": {
+      "title": "Propiedades exclusivas en la Costa Blanca",
+      "subtitle": "Su especialista en inmuebles de lujo en Alicante",
+      "cta": "Ver propiedades",
+      "cta_contact": "Contactar"
+    },
+    "featured_title": "Propiedades destacadas",
+    "featured_subtitle": "Una selección de nuestras propiedades más exclusivas",
+    "search_placeholder": "Zona, referencia...",
+    "search_operation": "Operación",
+    "search_submit": "Buscar"
+  },
+  "properties": {
+    "title": "Propiedades",
+    "subtitle": "Encuentra tu propiedad ideal en la Costa Blanca",
+    "filters": {
+      "operation": "Operación",
+      "type": "Tipo",
+      "zone": "Zona",
+      "price_range": "Precio",
+      "bedrooms": "Habitaciones",
+      "all_operations": "Todas",
+      "all_types": "Todos",
+      "all_zones": "Todas las zonas",
+      "min_price": "Precio mín.",
+      "max_price": "Precio máx.",
+      "any_bedrooms": "Cualquiera",
+      "clear": "Limpiar filtros"
+    },
+    "sort": {
+      "label": "Ordenar",
+      "newest": "Más recientes",
+      "price_asc": "Precio: menor a mayor",
+      "price_desc": "Precio: mayor a menor"
+    },
+    "results": "{count} propiedades encontradas",
+    "no_results": "No se han encontrado propiedades con los filtros seleccionados.",
+    "beds": "hab.",
+    "baths": "baños",
+    "sqm": "m²",
+    "view": "Ver propiedad",
+    "status": {
+      "vendida": "Vendida",
+      "alquilada": "Alquilada",
+      "reservada": "Reservada",
+      "disponible": "Disponible"
+    }
+  },
+  "property": {
+    "details": "Detalles",
+    "features": "Características",
+    "location": "Ubicación",
+    "description": "Descripción",
+    "beds": "Habitaciones",
+    "baths": "Baños",
+    "sqm": "Superficie",
+    "price": "Precio",
+    "ref": "Ref.",
+    "zone": "Zona",
+    "type": "Tipo",
+    "operation": "Operación",
+    "contact_title": "¿Le interesa esta propiedad?",
+    "contact_subtitle": "Contacte con nosotros y le asesoraremos sin compromiso.",
+    "gallery": "Galería de fotos",
+    "sold_label": "Vendida",
+    "rented_label": "Alquilada",
+    "reserved_label": "Reservada"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Estamos aquí para ayudarle a encontrar su propiedad ideal.",
+    "name": "Nombre completo",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "message": "Mensaje",
+    "message_placeholder": "Cuéntenos qué está buscando...",
+    "send": "Enviar mensaje",
+    "sending": "Enviando...",
+    "success": "¡Mensaje enviado! Le contactaremos a la brevedad.",
+    "error": "Error al enviar. Por favor, inténtelo de nuevo.",
+    "required": "Este campo es obligatorio",
+    "email_invalid": "Introduce un email válido"
+  },
+  "admin": {
+    "login_title": "Acceso Admin",
+    "login_subtitle": "Panel de gestión Alicante Privé",
+    "email": "Email",
+    "password": "Contraseña",
+    "login": "Iniciar sesión",
+    "logging_in": "Accediendo...",
+    "login_error": "Email o contraseña incorrectos.",
+    "logout": "Cerrar sesión",
+    "dashboard": "Inicio",
+    "properties": "Propiedades",
+    "contacts": "Contactos",
+    "messages": "Mensajes",
+    "dashboard_title": "Panel de control",
+    "total_properties": "Total propiedades",
+    "active_properties": "Disponibles",
+    "new_contacts": "Nuevos contactos",
+    "unread_messages": "Mensajes sin leer",
+    "pending_visits": "Visitas pendientes"
+  },
+  "types": {
+    "piso": "Piso",
+    "casa": "Casa",
+    "atico": "Ático",
+    "villa": "Villa",
+    "local": "Local",
+    "chalet": "Chalet",
+    "adosado": "Adosado",
+    "duplex": "Dúplex",
+    "estudio": "Estudio"
+  },
+  "operations": {
+    "venta": "Venta",
+    "alquiler": "Alquiler"
+  },
+  "features": {
+    "ascensor": "Ascensor",
+    "terraza": "Terraza",
+    "piscina": "Piscina",
+    "garaje": "Garaje",
+    "jardin": "Jardín",
+    "aire_acondicionado": "Aire acondicionado",
+    "calefaccion": "Calefacción",
+    "trastero": "Trastero",
+    "portero": "Portero",
+    "vistas_al_mar": "Vistas al mar",
+    "primera_linea": "Primera línea de playa",
+    "amueblado": "Amueblado",
+    "armarios": "Armarios empotrados",
+    "exterior": "Exterior",
+    "luminoso": "Luminoso"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "back": "Volver",
+    "search": "Buscar",
+    "all": "Todos",
+    "yes": "Sí",
+    "no": "No",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "new": "Nuevo",
+    "add": "Añadir",
+    "select": "Seleccionar",
+    "noData": "Sin datos"
+  },
+  "languages": {
+    "es": "Español",
+    "en": "English",
+    "fr": "Français",
+    "de": "Deutsch"
+  },
+  "meta": {
+    "site_name": "Alicante Privé",
+    "home_title": "Propiedades exclusivas en la Costa Blanca",
+    "home_description": "Inmobiliaria de lujo especializada en propiedades exclusivas en Alicante y la Costa Blanca.",
+    "properties_title": "Propiedades en venta y alquiler en Alicante",
+    "contact_title": "Contacto — Alicante Privé"
+  }
+}
