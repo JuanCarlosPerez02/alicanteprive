@@ -47,14 +47,12 @@ export default function AdminSidebar({ locale, unreadMensajes }: Props) {
   return (
     <aside
       className={`
-        shrink-0 bg-primary text-primary-foreground flex flex-col
-        transition-[width,transform] duration-200 ease-in-out
-        fixed top-0 left-0 h-full z-50
-        md:static md:z-auto md:h-auto md:min-h-screen
-        ${open
-          ? 'w-56 translate-x-0'
-          : '-translate-x-full md:translate-x-0 md:w-14'
-        }
+        shrink-0 bg-primary text-primary-foreground flex flex-col h-full
+        fixed top-0 left-0 z-50 w-56
+        transition-transform duration-200 ease-in-out
+        md:relative md:z-auto md:translate-x-0
+        md:transition-[width] md:duration-200
+        ${open ? 'translate-x-0 md:w-56' : '-translate-x-full md:w-14'}
       `}
     >
       {/* Logo */}
@@ -135,10 +133,12 @@ export default function AdminSidebar({ locale, unreadMensajes }: Props) {
             open ? 'px-3 py-2.5' : 'py-2.5 justify-center'
           }`}
         >
-          {open
-            ? <><ChevronLeft className="w-4 h-4 shrink-0" /><span className="text-xs">Colapsar</span></>
-            : <ChevronRight className="w-4 h-4 shrink-0" />
-          }
+          {open ? (
+            <ChevronLeft className="w-4 h-4 shrink-0" />
+          ) : (
+            <ChevronRight className="w-4 h-4 shrink-0" />
+          )}
+          {open && <span className="text-xs">Colapsar</span>}
         </button>
       </div>
     </aside>

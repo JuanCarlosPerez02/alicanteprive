@@ -87,7 +87,10 @@
     "success": "Message sent! We will be in touch shortly.",
     "error": "Error sending. Please try again.",
     "required": "This field is required",
-    "email_invalid": "Please enter a valid email"
+    "email_invalid": "Please enter a valid email",
+    "privacy_before": "By checking this box, I declare that I have read and accept the",
+    "privacy_link": "Privacy Policy",
+    "privacy_required": "You must accept the Privacy Policy to send the form"
   },
   "admin": {
     "login_title": "Admin Access",

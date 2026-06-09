@@ -47,7 +47,16 @@ export default function Footer() {
               Contacto
             </p>
             <address className="not-italic text-sm text-primary-foreground/60 space-y-1">
-              <p>Alicante, España</p>
+              <p>C. Alvarez Sereix 11, Entreplanta derecha</p>
+              <p>03001 Alicante</p>
+              <p>
+                <a
+                  href="tel:+34603248668"
+                  className="hover:text-gold transition-colors"
+                >
+                  +34 603 248 668
+                </a>
+              </p>
               <p>
                 <a
                   href="mailto:info@alicanteprive.com"

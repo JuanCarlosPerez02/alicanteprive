@@ -6,12 +6,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import { CheckCircle } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
 
 const schema = z.object({
   nombre: z.string().min(2),
   email: z.string().email(),
   telefono: z.string().optional(),
   mensaje: z.string().min(5),
+  aceptaPrivacidad: z.boolean().refine((v) => v === true),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -92,6 +94,25 @@ export default function ContactForm({ propiedadId, propiedadReferencia }: Props)
           placeholder={t('message_placeholder')}
         />
         {errors.mensaje && <p className={errorClass}>{t('required')}</p>}
+      </div>
+
+      <div>
+        <label className="flex items-start gap-2.5 cursor-pointer">
+          <input
+            {...register('aceptaPrivacidad')}
+            type="checkbox"
+            className="mt-0.5 h-4 w-4 shrink-0 accent-primary cursor-pointer"
+          />
+          <span className="text-xs text-muted-foreground leading-relaxed">
+            {t('privacy_before')}{' '}
+            <Link href="/politica-privacidad" className="underline hover:text-gold transition-colors">
+              {t('privacy_link')}
+            </Link>.
+          </span>
+        </label>
+        {errors.aceptaPrivacidad && (
+          <p className="text-destructive text-xs mt-1">{t('privacy_required')}</p>
+        )}
       </div>
 
       {serverError && <p className="text-destructive text-sm text-center">{serverError}</p>}

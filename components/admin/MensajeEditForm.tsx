@@ -94,21 +94,6 @@ export default function MensajeEditForm({
 
   return (
     <div className="space-y-6">
-      {/* Texto */}
-      <section className="bg-card border border-border rounded-sm p-5">
-        <h2 className="font-heading text-base font-semibold mb-4">Mensaje</h2>
-        <div>
-          <label className={labelClass}>Contenido del mensaje</label>
-          <textarea
-            value={texto}
-            onChange={(e) => setTexto(e.target.value)}
-            rows={8}
-            className={`${inputClass} resize-y leading-relaxed`}
-            placeholder="Escribe el contenido del mensaje…"
-          />
-        </div>
-      </section>
-
       {/* Asociaciones */}
       <section className="bg-card border border-border rounded-sm p-5">
         <h2 className="font-heading text-base font-semibold mb-4">Asociaciones</h2>
@@ -147,6 +132,21 @@ export default function MensajeEditForm({
               ))}
             </select>
           </div>
+        </div>
+      </section>
+
+      {/* Texto */}
+      <section className="bg-card border border-border rounded-sm p-5">
+        <h2 className="font-heading text-base font-semibold mb-4">Mensaje</h2>
+        <div>
+          <label className={labelClass}>Contenido del mensaje</label>
+          <textarea
+            value={texto}
+            onChange={(e) => setTexto(e.target.value)}
+            rows={8}
+            className={`${inputClass} resize-y leading-relaxed`}
+            placeholder="Escribe el contenido del mensaje…"
+          />
         </div>
       </section>
 

@@ -87,7 +87,10 @@
     "success": "Message envoyé ! Nous vous contacterons sous peu.",
     "error": "Erreur d'envoi. Veuillez réessayer.",
     "required": "Ce champ est obligatoire",
-    "email_invalid": "Veuillez saisir un e-mail valide"
+    "email_invalid": "Veuillez saisir un e-mail valide",
+    "privacy_before": "En cochant cette case, je déclare avoir lu et accepter la",
+    "privacy_link": "Politique de confidentialité",
+    "privacy_required": "Vous devez accepter la Politique de confidentialité pour envoyer le formulaire"
   },
   "admin": {
     "login_title": "Accès Admin",

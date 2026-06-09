@@ -87,7 +87,10 @@
     "success": "Nachricht gesendet! Wir melden uns in Kürze.",
     "error": "Fehler beim Senden. Bitte versuchen Sie es erneut.",
     "required": "Dieses Feld ist erforderlich",
-    "email_invalid": "Bitte geben Sie eine gültige E-Mail ein"
+    "email_invalid": "Bitte geben Sie eine gültige E-Mail ein",
+    "privacy_before": "Indem ich dieses Kästchen ankreuze, erkläre ich, dass ich die",
+    "privacy_link": "Datenschutzerklärung",
+    "privacy_required": "Sie müssen die Datenschutzerklärung akzeptieren, um das Formular zu senden"
   },
   "admin": {
     "login_title": "Admin-Zugang",

@@ -87,7 +87,10 @@
     "success": "¡Mensaje enviado! Le contactaremos a la brevedad.",
     "error": "Error al enviar. Por favor, inténtelo de nuevo.",
     "required": "Este campo es obligatorio",
-    "email_invalid": "Introduce un email válido"
+    "email_invalid": "Introduce un email válido",
+    "privacy_before": "Al marcar esta casilla, declaro que he leído y acepto la",
+    "privacy_link": "Política de Privacidad",
+    "privacy_required": "Debe aceptar la Política de Privacidad para enviar el formulario"
   },
   "admin": {
     "login_title": "Acceso Admin",

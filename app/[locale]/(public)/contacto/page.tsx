@@ -43,15 +43,16 @@ export default async function ContactoPage({
           </div>
           <div>
             <p className="text-xs tracking-widest uppercase text-muted-foreground mb-2 font-sans">Teléfono</p>
-            <a href="tel:+34600000000" className="text-sm hover:text-gold transition-colors">
-              +34 600 000 000
+            <a href="tel:+34603248668" className="text-sm hover:text-gold transition-colors">
+              +34 603 248 668
             </a>
           </div>
           <div>
             <p className="text-xs tracking-widest uppercase text-muted-foreground mb-2 font-sans">Dirección</p>
             <address className="not-italic text-sm text-muted-foreground">
-              Alicante, España<br />
-              Costa Blanca
+              C. Alvarez Sereix 11<br />
+              Entreplanta derecha<br />
+              03001 Alicante
             </address>
           </div>
         </div>

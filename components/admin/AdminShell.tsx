@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import AdminSidebar from './AdminSidebar';
 import { useSidebar } from './SidebarContext';
@@ -13,8 +14,13 @@ interface Props {
 export default function AdminShell({ locale, unreadMensajes, children }: Props) {
   const { open, toggle, close } = useSidebar();
 
+  useEffect(() => {
+    document.documentElement.style.overflow = 'hidden';
+    return () => { document.documentElement.style.overflow = ''; };
+  }, []);
+
   return (
-    <div className="flex min-h-screen bg-muted/30">
+    <div className="flex h-dvh overflow-hidden bg-muted/30">
       {/* Mobile backdrop */}
       {open && (
         <div
