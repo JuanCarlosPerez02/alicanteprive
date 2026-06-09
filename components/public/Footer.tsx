@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation';
 
 export default function Footer() {
   const t = useTranslations('nav');
+  const tf = useTranslations('footer');
 
   return (
     <footer className="bg-primary text-primary-foreground mt-auto">
@@ -15,14 +16,14 @@ export default function Footer() {
             </p>
             <p className="font-heading text-xl font-semibold mb-3">Alicante Privé</p>
             <p className="text-primary-foreground/60 text-sm leading-relaxed">
-              Propiedades exclusivas en la Costa Blanca. Experiencia, discreción y servicio personalizado.
+              {tf('tagline')}
             </p>
           </div>
 
           {/* Links */}
           <div>
             <p className="text-xs tracking-widest uppercase text-primary-foreground/40 mb-4 font-sans">
-              Navegación
+              {tf('nav_title')}
             </p>
             <nav className="space-y-2">
               {[
@@ -44,7 +45,7 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <p className="text-xs tracking-widest uppercase text-primary-foreground/40 mb-4 font-sans">
-              Contacto
+              {tf('contact_title')}
             </p>
             <address className="not-italic text-sm text-primary-foreground/60 space-y-1">
               <p>C. Alvarez Sereix 11, Entreplanta derecha</p>
@@ -70,7 +71,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-primary-foreground/10 mt-10 pt-6 text-center text-xs text-primary-foreground/30">
-          © {new Date().getFullYear()} Alicante Privé. Todos los derechos reservados.
+          © {new Date().getFullYear()} Alicante Privé. {tf('copyright')}
         </div>
       </div>
     </footer>

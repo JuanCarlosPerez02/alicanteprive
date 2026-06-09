@@ -16,7 +16,18 @@
     "featured_subtitle": "A selection of our most exclusive properties",
     "search_placeholder": "Area, reference...",
     "search_operation": "Operation",
-    "search_submit": "Search"
+    "search_submit": "Search",
+    "why_title": "Experience, discretion and personalised service",
+    "feat1_title": "Exclusive selection",
+    "feat1_body": "We only work with high-end properties. Each property goes through a rigorous selection process.",
+    "feat2_title": "Expert advice",
+    "feat2_body": "We know the Costa Blanca in depth. We guide you through every stage of the purchase or rental with complete discretion.",
+    "feat3_title": "Multilingual service",
+    "feat3_body": "We work in Spanish, English, French and German to ensure seamless communication with our clients.",
+    "cta_title": "Looking for a property on the Costa Blanca?",
+    "cta_body": "Tell us what you are looking for and we will help you find it, with no obligation.",
+    "cta_button": "Contact us now",
+    "coming_soon": "Featured properties coming soon."
   },
   "properties": {
     "title": "Properties",
@@ -176,6 +187,12 @@
     "home_description": "Luxury real estate agency specialising in exclusive properties in Alicante and the Costa Blanca.",
     "properties_title": "Properties for sale and rent in Alicante",
     "contact_title": "Contact — Alicante Privé"
+  },
+  "footer": {
+    "tagline": "Exclusive properties on the Costa Blanca. Experience, discretion and personalised service.",
+    "nav_title": "Navigation",
+    "contact_title": "Contact",
+    "copyright": "All rights reserved."
   },
   "privacy": {
     "meta_title": "Privacy Policy — Alicante Privé",

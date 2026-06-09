@@ -117,7 +117,7 @@ export default async function HomePage({
           </div>
         ) : (
           <div className="text-center text-muted-foreground py-16 border border-border rounded-sm bg-muted/20">
-            <p className="text-sm">Próximamente propiedades destacadas.</p>
+            <p className="text-sm">{t('coming_soon')}</p>
           </div>
         )}
 
@@ -140,27 +140,15 @@ export default async function HomePage({
               Alicante Privé
             </p>
             <h2 className="font-heading text-3xl font-semibold">
-              Experiencia, discreción y servicio personalizado
+              {t('why_title')}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              {
-                icon: Award,
-                title: 'Selección exclusiva',
-                body: 'Solo trabajamos con propiedades de alto standing. Cada inmueble pasa por un proceso de selección riguroso.',
-              },
-              {
-                icon: Shield,
-                title: 'Asesoramiento experto',
-                body: 'Conocemos la Costa Blanca en profundidad. Le guiamos en cada etapa de la compra o alquiler con total discreción.',
-              },
-              {
-                icon: Globe,
-                title: 'Atención multilingüe',
-                body: 'Atendemos en español, inglés, francés y alemán para garantizar una comunicación sin barreras con nuestros clientes.',
-              },
+              { icon: Award, title: t('feat1_title'), body: t('feat1_body') },
+              { icon: Shield, title: t('feat2_title'), body: t('feat2_body') },
+              { icon: Globe, title: t('feat3_title'), body: t('feat3_body') },
             ].map((item) => (
               <div
                 key={item.title}
@@ -182,16 +170,16 @@ export default async function HomePage({
         <div className="max-w-xl mx-auto">
           <div className="h-px w-12 bg-gold mx-auto mb-8" />
           <h2 className="font-heading text-2xl md:text-3xl font-semibold mb-4">
-            ¿Busca una propiedad en la Costa Blanca?
+            {t('cta_title')}
           </h2>
           <p className="text-muted-foreground text-sm mb-8 leading-relaxed">
-            Cuéntenos lo que busca y le ayudaremos a encontrarlo, sin compromiso.
+            {t('cta_body')}
           </p>
           <Link
             href="/contacto"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary text-primary-foreground font-semibold rounded-sm hover:opacity-90 transition-opacity text-sm tracking-wide"
           >
-            Contactar ahora
+            {t('cta_button')}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

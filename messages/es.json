@@ -16,7 +16,18 @@
     "featured_subtitle": "Una selección de nuestras propiedades más exclusivas",
     "search_placeholder": "Zona, referencia...",
     "search_operation": "Operación",
-    "search_submit": "Buscar"
+    "search_submit": "Buscar",
+    "why_title": "Experiencia, discreción y servicio personalizado",
+    "feat1_title": "Selección exclusiva",
+    "feat1_body": "Solo trabajamos con propiedades de alto standing. Cada inmueble pasa por un proceso de selección riguroso.",
+    "feat2_title": "Asesoramiento experto",
+    "feat2_body": "Conocemos la Costa Blanca en profundidad. Le guiamos en cada etapa de la compra o alquiler con total discreción.",
+    "feat3_title": "Atención multilingüe",
+    "feat3_body": "Atendemos en español, inglés, francés y alemán para garantizar una comunicación sin barreras con nuestros clientes.",
+    "cta_title": "¿Busca una propiedad en la Costa Blanca?",
+    "cta_body": "Cuéntenos lo que busca y le ayudaremos a encontrarlo, sin compromiso.",
+    "cta_button": "Contactar ahora",
+    "coming_soon": "Próximamente propiedades destacadas."
   },
   "properties": {
     "title": "Propiedades",
@@ -176,6 +187,12 @@
     "home_description": "Inmobiliaria de lujo especializada en propiedades exclusivas en Alicante y la Costa Blanca.",
     "properties_title": "Propiedades en venta y alquiler en Alicante",
     "contact_title": "Contacto — Alicante Privé"
+  },
+  "footer": {
+    "tagline": "Propiedades exclusivas en la Costa Blanca. Experiencia, discreción y servicio personalizado.",
+    "nav_title": "Navegación",
+    "contact_title": "Contacto",
+    "copyright": "Todos los derechos reservados."
   },
   "privacy": {
     "meta_title": "Política de Privacidad — Alicante Privé",
