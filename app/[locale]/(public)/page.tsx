@@ -1,6 +1,8 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
+
+export const revalidate = 300; // regenerate every 5 minutes
 import PropertyCard from '@/components/public/PropertyCard';
 import type { Metadata } from 'next';
 import type { Propiedad } from '@/types';
@@ -25,7 +27,7 @@ export default async function HomePage({
   const t = await getTranslations({ locale, namespace: 'home' });
   const tNav = await getTranslations({ locale, namespace: 'nav' });
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data: destacadas } = await supabase
     .from('propiedades')
     .select('*, propiedad_fotos(*)')

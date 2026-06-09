@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
+
+export const revalidate = 3600; // regenerate every hour
 import { getLocalizedText, formatPrice } from '@/lib/utils';
 import PropertyGallery from '@/components/public/PropertyGallery';
 import PropertyMap from '@/components/public/PropertyMap';
@@ -20,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; referencia: string }>;
 }): Promise<Metadata> {
   const { locale, referencia } = await params;
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data } = await supabase
     .from('propiedades')
     .select('titulo, descripcion, propiedad_fotos(url, es_portada)')
@@ -75,7 +77,7 @@ export default async function PropiedadPage({
   const tFeatures = await getTranslations({ locale, namespace: 'features' });
   const tContact = await getTranslations({ locale, namespace: 'contact' });
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data } = await supabase
     .from('propiedades')
     .select('*, propiedad_fotos(*)')

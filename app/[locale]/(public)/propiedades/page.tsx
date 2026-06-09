@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import PropertyCard from '@/components/public/PropertyCard';
 import FilterBar from '@/components/public/FilterBar';
 import { Suspense } from 'react';
@@ -45,7 +45,7 @@ export default async function PropiedadesPage({
 
   const isMapa = sp.vista === 'mapa';
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
 
   let query = supabase
     .from('propiedades')
