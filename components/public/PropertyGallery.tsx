@@ -193,18 +193,29 @@ export default function PropertyGallery({ fotos, titulo, zona, tipo, operacion }
             <ChevronLeft className="w-8 h-8" />
           </button>
 
+          {/* All images rendered at once — CSS controls visibility so the
+              browser fetches them in parallel instead of one-by-one */}
           <div
             className="relative w-[90vw] h-[80vh] max-w-5xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <Image
-              src={sorted[lightboxIndex].url}
-              alt={`${titulo} — foto ${lightboxIndex + 1}`}
-              fill
-              sizes="90vw"
-              className="object-contain"
-              priority
-            />
+            {sorted.map((foto, i) => (
+              <div
+                key={foto.url}
+                className={`absolute inset-0 transition-opacity duration-150 ${
+                  i === lightboxIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+              >
+                <Image
+                  src={foto.url}
+                  alt={i === lightboxIndex ? `${titulo} — foto ${i + 1}` : ''}
+                  fill
+                  sizes="90vw"
+                  className="object-contain"
+                  priority={i === lightboxIndex}
+                />
+              </div>
+            ))}
           </div>
 
           <button
