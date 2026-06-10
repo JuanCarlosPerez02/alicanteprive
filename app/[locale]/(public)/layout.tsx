@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import Header from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
+import PageTransition from '@/components/public/PageTransition';
 
 // Namespaces used by public client components (Header, Footer, PropertyCard,
 // FilterBar, LanguageSwitcher, ContactForm). The large `admin` namespace is
@@ -25,7 +26,9 @@ export default async function PublicLayout({ children }: { children: React.React
   return (
     <NextIntlClientProvider messages={clientMessages}>
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        <PageTransition>{children}</PageTransition>
+      </main>
       <Footer />
     </NextIntlClientProvider>
   );
