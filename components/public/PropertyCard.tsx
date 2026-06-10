@@ -66,11 +66,11 @@ export default function PropertyCard({ propiedad, locale }: Props) {
 
       {/* Content */}
       <div className="p-5">
-        {propiedad.zona && (
-          <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">
-            {propiedad.zona}
-          </p>
-        )}
+        {/* Type · zone — type is always shown, zone appended when present */}
+        <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">
+          <span className="text-gold">{tTypes(propiedad.tipo as Parameters<typeof tTypes>[0])}</span>
+          {propiedad.zona ? ` · ${propiedad.zona}` : ''}
+        </p>
         <h3 className="font-heading text-lg font-semibold leading-snug mb-3 line-clamp-2 group-hover:text-primary transition-colors">
           {titulo}
         </h3>
