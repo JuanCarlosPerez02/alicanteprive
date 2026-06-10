@@ -109,7 +109,9 @@ export default async function AdminContactosPage({ searchParams }: Props) {
                 </tr>
               )}
               {contactos.map((contacto) => {
-                const interesCount = (contacto as any).interes_propiedad?.[0]?.count ?? 0;
+                const interesCount =
+                  (contacto as { interes_propiedad?: { count: number }[] })
+                    .interes_propiedad?.[0]?.count ?? 0;
                 return (
                   <tr
                     key={contacto.id}

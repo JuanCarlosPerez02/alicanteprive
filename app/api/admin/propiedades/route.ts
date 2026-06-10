@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
+import { PROPIEDADES_TAG } from '@/lib/propiedades';
 
 const schema = z.object({
   referencia: z.string().min(1),
@@ -39,6 +41,7 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error) throw error;
+    revalidateTag(PROPIEDADES_TAG, { expire: 0 });
     return NextResponse.json({ id: propiedad.id });
   } catch (err) {
     if (err instanceof z.ZodError) {

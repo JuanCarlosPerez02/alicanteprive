@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { ExternalLink, MapPin, Home, Ruler, Bath, BedDouble, Star } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 import type { Propiedad } from '@/types';
@@ -46,9 +47,9 @@ export default function PropiedadResumen({ propiedad: p, locale }: Props) {
       {/* Cover + quick stats */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-5">
         {/* Cover photo */}
-        <div className="aspect-[4/3] rounded-sm overflow-hidden bg-muted border border-border">
+        <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-muted border border-border">
           {cover ? (
-            <img src={cover} alt={titulo} className="w-full h-full object-cover" />
+            <Image src={cover} alt={titulo} fill sizes="(max-width:1024px) 100vw, 33vw" className="object-cover" />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <Home className="w-12 h-12 text-muted-foreground/30" />
@@ -156,10 +157,12 @@ export default function PropiedadResumen({ propiedad: p, locale }: Props) {
           </h3>
           <div className="flex gap-2 overflow-x-auto pb-1">
             {fotos.map((f) => (
-              <img
+              <Image
                 key={f.id}
                 src={f.url}
                 alt=""
+                width={128}
+                height={80}
                 className="h-20 w-32 object-cover rounded-sm shrink-0 border border-border"
               />
             ))}

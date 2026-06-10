@@ -1,10 +1,15 @@
 import { getTranslations } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
-import { Building2, Users, MessageSquare, CalendarClock } from 'lucide-react';
+import { Building2, Users, MessageSquare } from 'lucide-react';
 
 export default async function AdminDashboard() {
   const t = await getTranslations('admin');
   const supabase = await createClient();
+
+  // "New contacts" window: last 30 days. Computed here in a Server Component —
+  // it runs once per request on the server, not during React reconciliation.
+  // eslint-disable-next-line react-hooks/purity
+  const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
 
   // Fetch basic counts
   const [
@@ -21,7 +26,7 @@ export default async function AdminDashboard() {
     supabase
       .from('contactos')
       .select('*', { count: 'exact', head: true })
-      .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()),
+      .gte('created_at', since),
     supabase.from('mensajes').select('*', { count: 'exact', head: true }).eq('leido', false),
   ]);
 

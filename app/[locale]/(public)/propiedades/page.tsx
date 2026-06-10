@@ -1,10 +1,9 @@
-import { getTranslations } from 'next-intl/server';
-import { createPublicClient } from '@/lib/supabase/public';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getPropiedadesList } from '@/lib/propiedades';
 import PropertyCard from '@/components/public/PropertyCard';
 import FilterBar from '@/components/public/FilterBar';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import type { Propiedad } from '@/types';
 import { getCoverPhoto, getLocalizedText } from '@/lib/utils';
 import type { MapProperty } from '@/components/public/PropertiesMapView';
 import PropertiesMapWrapper from '@/components/public/PropertiesMapWrapper';
@@ -40,51 +39,24 @@ export default async function PropiedadesPage({
   searchParams: Promise<SearchParams>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const sp = await searchParams;
   const t = await getTranslations({ locale, namespace: 'properties' });
 
   const isMapa = sp.vista === 'mapa';
 
-  const supabase = createPublicClient();
-
-  // Shared filter/sort logic applied to whichever query branch runs
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function withFilters(q: any): any {
-    if (sp.operacion) q = q.eq('operacion', sp.operacion);
-    if (sp.tipo) q = q.eq('tipo', sp.tipo);
-    if (sp.zona) q = q.ilike('zona', `%${sp.zona}%`);
-    if (sp.precio_min) q = q.gte('precio', Number(sp.precio_min));
-    if (sp.precio_max) q = q.lte('precio', Number(sp.precio_max));
-    if (sp.habitaciones) q = q.gte('habitaciones', Number(sp.habitaciones));
-    if (sp.orden === 'precio_asc') q = q.order('precio', { ascending: true });
-    else if (sp.orden === 'precio_desc') q = q.order('precio', { ascending: false });
-    else q = q.order('created_at', { ascending: false });
-    return q;
-  }
-
-  let propiedades: Propiedad[];
-
-  if (isMapa) {
-    // Map view: only fields needed for markers + cover photo, pre-filter by coordinates
-    const { data } = await withFilters(
-      supabase
-        .from('propiedades')
-        .select('id, referencia, titulo, precio, operacion, zona, lat, lng, propiedad_fotos(url, es_portada, orden)')
-        .neq('estado', 'oculta')
-        .not('lat', 'is', null)
-        .not('lng', 'is', null)
-    );
-    propiedades = (data as unknown as Propiedad[]) ?? [];
-  } else {
-    // Grid view: fields needed by PropertyCard + cover photo
-    const { data } = await withFilters(
-      supabase
-        .from('propiedades')
-        .select('id, referencia, titulo, precio, operacion, zona, tipo, estado, habitaciones, banos, metros, propiedad_fotos(url, es_portada, orden)')
-        .neq('estado', 'oculta')
-    );
-    propiedades = (data as unknown as Propiedad[]) ?? [];
-  }
+  // Cached per filter combination (invalidated on admin edits via PROPIEDADES_TAG).
+  // The page stays dynamic for searchParams, but the Supabase query is reused.
+  const propiedades = await getPropiedadesList({
+    isMapa,
+    operacion: sp.operacion,
+    tipo: sp.tipo,
+    zona: sp.zona,
+    precio_min: sp.precio_min,
+    precio_max: sp.precio_max,
+    habitaciones: sp.habitaciones,
+    orden: sp.orden,
+  });
 
   // Build URL helpers for vista toggle (preserve all current filters)
   function buildUrl(vista: string) {

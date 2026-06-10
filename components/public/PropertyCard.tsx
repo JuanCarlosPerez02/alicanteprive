@@ -28,7 +28,7 @@ export default function PropertyCard({ propiedad, locale }: Props) {
   return (
     <Link
       href={`/propiedades/${propiedad.referencia}`}
-      className="group block bg-card border border-border rounded-sm overflow-hidden card-hover"
+      className="group block bg-card border border-border rounded-sm overflow-hidden card-hover transition-colors hover:border-gold/50"
     >
       {/* Photo */}
       <div className="relative h-56 bg-muted overflow-hidden">
@@ -41,10 +41,15 @@ export default function PropertyCard({ propiedad, locale }: Props) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
-            Sin foto
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary to-[oklch(0.13_0.03_250)]">
+            <span className="text-gold/80 text-[10px] font-semibold tracking-[0.25em] uppercase">
+              Alicante Privé
+            </span>
           </div>
         )}
+
+        {/* Scrim: keeps the badges legible on light photos + adds depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/10 pointer-events-none" />
 
         {/* Status badge */}
         {badgeClass && (
@@ -54,7 +59,7 @@ export default function PropertyCard({ propiedad, locale }: Props) {
         )}
 
         {/* Operation badge */}
-        <span className="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-sm bg-gold text-gold-foreground">
+        <span className="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-sm bg-gold text-gold-foreground shadow-sm">
           {tOps(propiedad.operacion)}
         </span>
       </div>

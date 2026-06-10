@@ -1,3 +1,5 @@
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import AdminShell from '@/components/admin/AdminShell';
 import { SidebarProvider } from '@/components/admin/SidebarContext';
@@ -10,13 +12,15 @@ export default async function AdminLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  // Admin sits behind auth, so it gets the full message set.
+  const messages = await getMessages();
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return <>{children}</>;
+    return <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>;
   }
 
   const { count: unreadMensajes } = await supabase
@@ -25,10 +29,12 @@ export default async function AdminLayout({
     .eq('leido', false);
 
   return (
-    <SidebarProvider>
-      <AdminShell locale={locale} unreadMensajes={unreadMensajes ?? 0}>
-        {children}
-      </AdminShell>
-    </SidebarProvider>
+    <NextIntlClientProvider messages={messages}>
+      <SidebarProvider>
+        <AdminShell locale={locale} unreadMensajes={unreadMensajes ?? 0}>
+          {children}
+        </AdminShell>
+      </SidebarProvider>
+    </NextIntlClientProvider>
   );
 }

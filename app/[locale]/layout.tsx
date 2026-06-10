@@ -1,8 +1,20 @@
 import type { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { Playfair_Display, Inter } from 'next/font/google';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+
+const playfair = Playfair_Display({
+  variable: '--font-playfair',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export async function generateMetadata({
   params,
@@ -42,11 +54,22 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const messages = await getMessages();
+  // Enable static rendering for this locale segment (next-intl). Without this,
+  // every page reads the locale from request headers and opts into dynamic
+  // rendering, defeating `revalidate`/ISR.
+  setRequestLocale(locale);
 
+  // The client message provider lives in each route group ((public) / admin)
+  // so the public bundle only ships the namespaces it actually uses.
   return (
-    <NextIntlClientProvider messages={messages}>
-      {children}
-    </NextIntlClientProvider>
+    <html
+      lang={locale}
+      className={`${playfair.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen flex flex-col antialiased">
+        {children}
+      </body>
+    </html>
   );
 }

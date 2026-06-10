@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { createServiceClient } from '@/lib/supabase/service';
+import { PROPIEDADES_TAG } from '@/lib/propiedades';
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
@@ -51,5 +53,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: dbError.message }, { status: 500 });
   }
 
+  revalidateTag(PROPIEDADES_TAG, { expire: 0 });
   return NextResponse.json({ foto });
 }

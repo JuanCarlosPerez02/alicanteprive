@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useCallback, useSyncExternalStore } from 'react';
 
 interface SidebarCtx {
   open: boolean;
@@ -14,30 +14,41 @@ const SidebarContext = createContext<SidebarCtx>({
   close: () => {},
 });
 
+const KEY = 'adminSidebar';
+const EVENT = 'adminSidebar:change';
+
+function subscribe(callback: () => void) {
+  window.addEventListener(EVENT, callback);
+  window.addEventListener('storage', callback);
+  return () => {
+    window.removeEventListener(EVENT, callback);
+    window.removeEventListener('storage', callback);
+  };
+}
+
+function getSnapshot(): boolean {
+  const saved = localStorage.getItem(KEY);
+  if (saved !== null) return saved === 'open';
+  return window.innerWidth >= 768;
+}
+
+// Server render has no localStorage/window — default to open and let the client
+// reconcile to the stored value on hydration.
+function getServerSnapshot(): boolean {
+  return true;
+}
+
+function setStored(open: boolean) {
+  localStorage.setItem(KEY, open ? 'open' : 'closed');
+  // Same-tab writes don't fire `storage`, so notify subscribers explicitly.
+  window.dispatchEvent(new Event(EVENT));
+}
+
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(true);
+  const open = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  useEffect(() => {
-    const saved = localStorage.getItem('adminSidebar');
-    if (saved !== null) {
-      setOpen(saved === 'open');
-    } else {
-      setOpen(window.innerWidth >= 768);
-    }
-  }, []);
-
-  const toggle = useCallback(() => {
-    setOpen((v) => {
-      const next = !v;
-      localStorage.setItem('adminSidebar', next ? 'open' : 'closed');
-      return next;
-    });
-  }, []);
-
-  const close = useCallback(() => {
-    setOpen(false);
-    localStorage.setItem('adminSidebar', 'closed');
-  }, []);
+  const toggle = useCallback(() => setStored(!getSnapshot()), []);
+  const close = useCallback(() => setStored(false), []);
 
   return (
     <SidebarContext.Provider value={{ open, toggle, close }}>

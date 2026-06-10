@@ -1,4 +1,5 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { createPublicClient } from '@/lib/supabase/public';
 
@@ -24,6 +25,7 @@ export default async function HomePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'home' });
   const tNav = await getTranslations({ locale, namespace: 'nav' });
 
@@ -40,6 +42,18 @@ export default async function HomePage({
     <>
       {/* ── Hero ──────────────────────────────────────────── */}
       <section className="relative overflow-hidden flex flex-col items-center justify-center min-h-[88vh] bg-primary text-primary-foreground px-6 text-center">
+
+        {/* Background photo (LCP — preloaded) */}
+        <Image
+          src="/hero.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        {/* Navy tint: keeps the text legible and the photo on-brand */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/70 to-primary/95 pointer-events-none" />
 
         {/* Dot grid pattern */}
         <div
@@ -68,11 +82,11 @@ export default async function HomePage({
             <div className="h-px w-8 bg-gold/60" />
           </div>
 
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold max-w-3xl leading-tight mb-6">
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold max-w-3xl leading-tight mb-6 [text-shadow:0_2px_24px_rgb(0_0_0/0.35)]">
             {t('hero.title')}
           </h1>
 
-          <p className="text-base md:text-lg text-primary-foreground/65 max-w-lg mb-10 leading-relaxed">
+          <p className="text-base md:text-lg text-primary-foreground/80 max-w-lg mb-10 leading-relaxed [text-shadow:0_1px_12px_rgb(0_0_0/0.3)]">
             {t('hero.subtitle')}
           </p>
 
@@ -139,7 +153,7 @@ export default async function HomePage({
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-gold text-xs tracking-[0.3em] uppercase font-sans mb-3 font-medium">
-              Alicante Privé
+              Costa Blanca
             </p>
             <h2 className="font-heading text-3xl font-semibold">
               {t('why_title')}

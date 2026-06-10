@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
+import { PROPIEDADES_TAG } from '@/lib/propiedades';
 
 const schema = z.object({
   referencia: z.string().min(1),
@@ -47,6 +49,7 @@ export async function PUT(
       .eq('id', id);
 
     if (error) throw error;
+    revalidateTag(PROPIEDADES_TAG, { expire: 0 });
     return NextResponse.json({ ok: true });
   } catch (err) {
     if (err instanceof z.ZodError) {
@@ -67,6 +70,7 @@ export async function DELETE(
 
   const { error } = await supabase.from('propiedades').delete().eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  revalidateTag(PROPIEDADES_TAG, { expire: 0 });
   return NextResponse.json({ ok: true });
 }
 
@@ -81,5 +85,6 @@ export async function PATCH(
   const body = await req.json();
   const { error } = await supabase.from('propiedades').update(body).eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  revalidateTag(PROPIEDADES_TAG, { expire: 0 });
   return NextResponse.json({ ok: true });
 }

@@ -13,6 +13,7 @@ import {
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { GripVertical, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { formatPrice } from '@/lib/utils';
 import type { Propiedad } from '@/types';
 
@@ -45,7 +46,11 @@ function CardShell({ p }: { p: Propiedad }) {
   const titulo = getTitulo(p.titulo);
   return (
     <div className="bg-card border border-border rounded-sm shadow-lg w-52">
-      {cover && <img src={cover} alt="" className="w-full h-14 object-cover rounded-t-sm" />}
+      {cover && (
+        <div className="relative w-full h-14">
+          <Image src={cover} alt="" fill sizes="208px" className="object-cover rounded-t-sm" />
+        </div>
+      )}
       <div className="p-3">
         <p className="text-[10px] font-mono text-muted-foreground mb-1">{p.referencia}</p>
         <p className="text-sm font-medium line-clamp-2 leading-snug mb-1">{titulo}</p>
@@ -82,7 +87,9 @@ function KanbanCard({ p, locale }: { p: Propiedad; locale: string }) {
       }`}
     >
       {cover && (
-        <img src={cover} alt="" className="w-full h-14 object-cover rounded-t-sm pointer-events-none" />
+        <div className="relative w-full h-14 pointer-events-none">
+          <Image src={cover} alt="" fill sizes="256px" className="object-cover rounded-t-sm" />
+        </div>
       )}
       <div className="p-3">
         <div className="flex items-start gap-1">

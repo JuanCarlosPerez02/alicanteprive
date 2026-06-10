@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createPublicClient } from '@/lib/supabase/public';
 
 export const revalidate = 3600; // regenerate every hour
@@ -47,6 +47,18 @@ export async function generateMetadata({
   };
 }
 
+// Prerender every visible property at build time (ISR). Unknown references
+// (e.g. newly published) are still rendered on demand and then cached.
+export async function generateStaticParams() {
+  const supabase = createPublicClient();
+  const { data } = await supabase
+    .from('propiedades')
+    .select('referencia')
+    .neq('estado', 'oculta');
+
+  return (data ?? []).map(({ referencia }) => ({ referencia }));
+}
+
 const FEATURE_ICONS: Record<string, LucideIcon> = {
   ascensor: ArrowUpDown,
   terraza: Sun,
@@ -71,11 +83,11 @@ export default async function PropiedadPage({
   params: Promise<{ locale: string; referencia: string }>;
 }) {
   const { locale, referencia } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'property' });
   const tOps = await getTranslations({ locale, namespace: 'operations' });
   const tTypes = await getTranslations({ locale, namespace: 'types' });
   const tFeatures = await getTranslations({ locale, namespace: 'features' });
-  const tContact = await getTranslations({ locale, namespace: 'contact' });
 
   const supabase = createPublicClient();
   const { data } = await supabase

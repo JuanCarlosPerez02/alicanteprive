@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { Trash2, Star, StarOff, Upload } from 'lucide-react';
 import type { PropiedadFoto } from '@/types';
@@ -64,14 +64,11 @@ export default function FotoManager({ propiedadId, initialFotos }: Props) {
     );
   }
 
-  const handleDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault();
-      setDragOver(false);
-      if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files);
-    },
-    [fotos]
-  );
+  function handleDrop(e: React.DragEvent) {
+    e.preventDefault();
+    setDragOver(false);
+    if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files);
+  }
 
   return (
     <div className="space-y-4">

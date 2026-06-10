@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { createServiceClient } from '@/lib/supabase/service';
+import { PROPIEDADES_TAG } from '@/lib/propiedades';
 
 async function getAuth() {
   const supabase = await createClient();
@@ -33,6 +35,7 @@ export async function DELETE(
 
   const { error } = await supabase.from('propiedad_fotos').delete().eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  revalidateTag(PROPIEDADES_TAG, { expire: 0 });
   return NextResponse.json({ ok: true });
 }
 
@@ -47,5 +50,6 @@ export async function PATCH(
   const body = await req.json();
   const { error } = await supabase.from('propiedad_fotos').update(body).eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  revalidateTag(PROPIEDADES_TAG, { expire: 0 });
   return NextResponse.json({ ok: true });
 }

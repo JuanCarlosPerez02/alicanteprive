@@ -5,11 +5,22 @@ import { routing } from './i18n/routing';
 
 const handleI18nRouting = createMiddleware(routing);
 
-export async function middleware(request: NextRequest) {
-  // Run next-intl locale routing first
+export async function proxy(request: NextRequest) {
+  // Locale routing runs for every matched request (handles `/` → `/es`, etc.)
   const i18nResponse = handleI18nRouting(request);
 
-  // Refresh Supabase session and check auth for admin routes
+  const pathname = request.nextUrl.pathname;
+  const adminMatch = pathname.match(/^\/([a-z]{2})\/admin/);
+
+  // Public pages (home, propiedades, contacto…) need no auth. Skipping the
+  // Supabase round-trip here removes a blocking network call from every public
+  // navigation and initial load — the main cause of the first-paint delay.
+  if (!adminMatch) {
+    return i18nResponse;
+  }
+
+  // Admin area only: validate the session. The network call lives here, where
+  // navigations are infrequent, instead of on every public request.
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -31,18 +42,15 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const pathname = request.nextUrl.pathname;
-  const adminMatch = pathname.match(/^\/([a-z]{2})\/admin/);
   const isLoginPage = pathname.match(/^\/([a-z]{2})\/admin\/login/);
+  const locale = adminMatch[1];
 
-  if (adminMatch && !isLoginPage && !user) {
-    const locale = adminMatch[1];
+  if (!isLoginPage && !user) {
     return NextResponse.redirect(new URL(`/${locale}/admin/login`, request.url));
   }
 
-  // Redirect authenticated users away from login page
+  // Redirect authenticated users away from the login page
   if (isLoginPage && user) {
-    const locale = isLoginPage[1];
     return NextResponse.redirect(new URL(`/${locale}/admin`, request.url));
   }
 
