@@ -84,9 +84,6 @@
     font-family: var(--font-heading), Georgia, serif;
     @apply tracking-tight;
   }
-  html {
-    scroll-behavior: smooth;
-  }
 }
 
 /* ── Utility classes ─────────────────────────────────────────────── */
