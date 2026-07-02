@@ -39,15 +39,29 @@ export default function PropertyGallery({ fotos, titulo, zona, tipo, operacion }
   const mobilePrev = () => setMobileIndex((i) => (i - 1 + sorted.length) % sorted.length);
   const mobileNext = () => setMobileIndex((i) => (i + 1) % sorted.length);
 
+  // Swipe navigation inside the lightbox (mobile)
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
+    touchStartX.current = null;
+  };
+
   useEffect(() => {
     if (lightboxIndex === null) return;
+    // Lock background scroll while the lightbox is open
+    document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft') prev();
       if (e.key === 'ArrowRight') next();
     };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
   }, [lightboxIndex, prev, next]);
 
   if (sorted.length === 0) {
@@ -172,68 +186,90 @@ export default function PropertyGallery({ fotos, titulo, zona, tipo, operacion }
       {/* ─── Lightbox (shared) ────────────────────────────────────── */}
       {lightboxIndex !== null && (
         <div
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+          className="fixed inset-0 z-50 bg-black/95 flex flex-col"
           onClick={closeLightbox}
         >
-          <button
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 text-white/80 hover:text-white p-2"
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          <p className="absolute top-4 left-1/2 -translate-x-1/2 text-white/60 text-sm tabular-nums">
-            {lightboxIndex + 1} / {sorted.length}
-          </p>
-
-          <button
-            onClick={(e) => { e.stopPropagation(); prev(); }}
-            className="absolute left-3 sm:left-6 text-white/70 hover:text-white p-2"
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
-
-          {/* All images rendered at once — CSS controls visibility so the
-              browser fetches them in parallel instead of one-by-one */}
+          {/* Top bar: counter + close */}
           <div
-            className="relative w-[90vw] h-[80vh] max-w-5xl"
+            className="flex items-center justify-between px-4 py-3 shrink-0"
             onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-white/70 text-sm tabular-nums">
+              {lightboxIndex + 1} / {sorted.length}
+            </p>
+            <button
+              onClick={closeLightbox}
+              aria-label="Cerrar"
+              className="text-white/90 hover:text-white bg-white/10 hover:bg-white/25 rounded-full p-2 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Image area — fills the remaining space; image is centred & contained.
+              All images stay mounted so the browser can prefetch them in parallel. */}
+          <div
+            className="relative flex-1 min-h-0"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
           >
             {sorted.map((foto, i) => (
               <div
                 key={foto.url}
-                className={`absolute inset-0 transition-opacity duration-150 ${
+                onClick={closeLightbox}
+                className={`absolute inset-0 p-2 sm:p-6 transition-opacity duration-150 ${
                   i === lightboxIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
               >
-                <Image
-                  src={foto.url}
-                  alt={i === lightboxIndex ? `${titulo} — foto ${i + 1}` : ''}
-                  fill
-                  sizes="90vw"
-                  className="object-contain"
-                  priority={i === lightboxIndex}
-                />
+                <div className="relative w-full h-full" onClick={(e) => e.stopPropagation()}>
+                  <Image
+                    src={foto.url}
+                    alt={i === lightboxIndex ? `${titulo} — foto ${i + 1}` : ''}
+                    fill
+                    sizes="100vw"
+                    className="object-contain"
+                    priority={i === lightboxIndex}
+                  />
+                </div>
               </div>
             ))}
+
+            {sorted.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => { e.stopPropagation(); prev(); }}
+                  aria-label="Anterior"
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/25 text-white rounded-full p-2 sm:p-3 transition-colors"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); next(); }}
+                  aria-label="Siguiente"
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/25 text-white rounded-full p-2 sm:p-3 transition-colors"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
           </div>
 
-          <button
-            onClick={(e) => { e.stopPropagation(); next(); }}
-            className="absolute right-3 sm:right-6 text-white/70 hover:text-white p-2"
-          >
-            <ChevronRight className="w-8 h-8" />
-          </button>
-
-          <div className="absolute bottom-6 flex gap-1.5">
-            {sorted.map((_, i) => (
-              <button
-                key={i}
-                onClick={(e) => { e.stopPropagation(); setLightboxIndex(i); }}
-                className={`w-1.5 h-1.5 rounded-full transition-colors ${i === lightboxIndex ? 'bg-white' : 'bg-white/30'}`}
-              />
-            ))}
-          </div>
+          {/* Thumbnail dots */}
+          {sorted.length > 1 && (
+            <div
+              className="shrink-0 flex flex-wrap justify-center gap-1.5 px-4 py-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {sorted.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setLightboxIndex(i)}
+                  aria-label={`Foto ${i + 1}`}
+                  className={`w-2 h-2 rounded-full transition-colors ${i === lightboxIndex ? 'bg-white' : 'bg-white/30 hover:bg-white/50'}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </>
