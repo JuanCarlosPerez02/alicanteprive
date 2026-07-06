@@ -21,6 +21,10 @@ const schema = z.object({
   caracteristicas: z.array(z.string()),
   estado: z.enum(['disponible', 'reservada', 'vendida', 'alquilada', 'oculta']),
   destacada: z.boolean(),
+  certificado_energetico: z
+    .enum(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'en_tramite', 'exento'])
+    .nullable()
+    .optional(),
   referencia_idealista: z.string().optional(),
   referencia_fotocasa: z.string().optional(),
 });

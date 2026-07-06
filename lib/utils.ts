@@ -24,6 +24,9 @@ export function formatPrice(price: number, locale: string): string {
   }).format(price);
 }
 
+/** Agency WhatsApp number in international format, no '+' (wa.me links). */
+export const WHATSAPP_PHONE = '34603248668';
+
 /** Gets the cover photo URL from a property's fotos array. */
 export function getCoverPhoto(fotos: { url: string; es_portada: boolean; orden: number }[]): string | null {
   if (!fotos || fotos.length === 0) return null;

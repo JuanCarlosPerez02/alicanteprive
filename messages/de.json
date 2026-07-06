@@ -3,7 +3,8 @@
     "home": "Startseite",
     "properties": "Immobilien",
     "contact": "Kontakt",
-    "admin": "Admin"
+    "admin": "Admin",
+    "sell": "Verkaufen"
   },
   "home": {
     "hero": {
@@ -63,7 +64,10 @@
       "alquilada": "Vermietet",
       "reservada": "Reserviert",
       "disponible": "Verfügbar"
-    }
+    },
+    "prev": "Zurück",
+    "next": "Weiter",
+    "page_info": "Seite {page} von {total}"
   },
   "property": {
     "details": "Details",
@@ -83,7 +87,12 @@
     "gallery": "Fotogalerie",
     "sold_label": "Verkauft",
     "rented_label": "Vermietet",
-    "reserved_label": "Reserviert"
+    "reserved_label": "Reserviert",
+    "whatsapp_cta": "Per WhatsApp anfragen",
+    "whatsapp_msg": "Hallo, ich interessiere mich für die Immobilie {ref} — {title}. Könnten Sie mir weitere Informationen geben?",
+    "energy_cert": "Energieausweis",
+    "energy_en_tramite": "In Bearbeitung",
+    "energy_exento": "Befreit"
   },
   "contact": {
     "title": "Kontakt",
@@ -101,7 +110,8 @@
     "email_invalid": "Bitte geben Sie eine gültige E-Mail ein",
     "privacy_before": "Indem ich dieses Kästchen ankreuze, erkläre ich, dass ich die",
     "privacy_link": "Datenschutzerklärung",
-    "privacy_required": "Sie müssen die Datenschutzerklärung akzeptieren, um das Formular zu senden"
+    "privacy_required": "Sie müssen die Datenschutzerklärung akzeptieren, um das Formular zu senden",
+    "whatsapp_cta": "Chat öffnen"
   },
   "admin": {
     "login_title": "Admin-Zugang",
@@ -230,5 +240,28 @@
     "s6_contact_post": ") eine Beschwerde einreichen.",
     "s7_title": "7. Sicherheit",
     "s7_body": "Wir haben die notwendigen technischen und organisatorischen Maßnahmen ergriffen, um die Sicherheit und Integrität der von uns verarbeiteten personenbezogenen Daten zu gewährleisten und deren Verlust, Veränderung und/oder Zugriff durch unbefugte Dritte zu verhindern."
+  },
+  "sell": {
+    "meta_title": "Verkaufen Sie Ihre Immobilie — Kostenlose Bewertung",
+    "meta_description": "Verkaufen Sie Ihre Immobilie in Alicante und an der Costa Blanca mit Alicante Privé. Kostenlose Bewertung, Premium-Marketing und internationale Käufer.",
+    "eyebrow": "Verkaufen Sie mit uns",
+    "title": "Verkaufen Sie Ihre Immobilie an der Costa Blanca",
+    "subtitle": "Kostenlose und unverbindliche Bewertung. Absolute Diskretion, Premium-Marketing und Zugang zu nationalen und internationalen Käufern.",
+    "benefit1_title": "Kostenlose professionelle Bewertung",
+    "benefit1_body": "Wir analysieren Ihre Immobilie und den Markt in Ihrer Gegend, um den optimalen Verkaufspreis festzulegen – völlig unverbindlich.",
+    "benefit2_title": "Premium-Marketing",
+    "benefit2_body": "Professionelle Fotografie, gepflegte Präsentation und Veröffentlichung auf unserer Website und den führenden Immobilienportalen.",
+    "benefit3_title": "Internationale Käufer",
+    "benefit3_body": "Wir arbeiten in vier Sprachen mit einem aktiven Portfolio nationaler und internationaler Käufer.",
+    "form_title": "Fordern Sie Ihre kostenlose Bewertung an",
+    "form_subtitle": "Erzählen Sie uns von Ihrer Immobilie – wir melden uns innerhalb von 24 Stunden.",
+    "address": "Adresse oder Lage der Immobilie",
+    "address_placeholder": "z. B.: Cabo de las Huertas, Alicante",
+    "type": "Immobilientyp",
+    "sqm": "Ungefähre Fläche (m²)",
+    "details": "Erzählen Sie uns mehr (optional)",
+    "details_placeholder": "Zustand, Renovierungen, Baujahr...",
+    "send": "Bewertung anfordern",
+    "success": "Anfrage erhalten! Wir melden uns innerhalb von 24 Stunden."
   }
 }

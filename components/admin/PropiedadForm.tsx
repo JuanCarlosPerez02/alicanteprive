@@ -29,6 +29,12 @@ const LOCALES = [
 
 const TIPOS = ['piso', 'casa', 'atico', 'villa', 'chalet', 'adosado', 'duplex', 'estudio', 'local'];
 const ESTADOS = ['disponible', 'reservada', 'vendida', 'alquilada', 'oculta'];
+const CERTIFICADOS = [
+  { value: '', label: '— Sin especificar —' },
+  ...['A', 'B', 'C', 'D', 'E', 'F', 'G'].map((v) => ({ value: v, label: v })),
+  { value: 'en_tramite', label: 'En trámite' },
+  { value: 'exento', label: 'Exento' },
+];
 const CARACTERISTICAS = [
   'ascensor', 'terraza', 'piscina', 'garaje', 'jardin',
   'aire_acondicionado', 'calefaccion', 'trastero', 'portero',
@@ -47,6 +53,7 @@ type FormState = {
   referencia: string; operacion: string; tipo: string; precio: string;
   zona: string; direccion: string; metros: string; habitaciones: string;
   banos: string; estado: string; destacada: boolean;
+  certificado_energetico: string;
   referencia_idealista: string; referencia_fotocasa: string;
   titulo: Record<string, string>; descripcion: Record<string, string>;
   caracteristicas: string[]; lat: string; lng: string;
@@ -65,6 +72,7 @@ function toFormState(p?: Propiedad): FormState {
     banos: p?.banos?.toString() ?? '',
     estado: p?.estado ?? 'disponible',
     destacada: p?.destacada ?? false,
+    certificado_energetico: p?.certificado_energetico ?? '',
     referencia_idealista: p?.referencia_idealista ?? '',
     referencia_fotocasa: p?.referencia_fotocasa ?? '',
     titulo: (p?.titulo as Record<string, string>) ?? { es: '', en: '', fr: '', de: '' },
@@ -193,6 +201,7 @@ export default function PropiedadForm({ propiedad, locale }: Props) {
       banos: form.banos ? parseInt(form.banos) : null,
       lat: form.lat ? parseFloat(form.lat) : null,
       lng: form.lng ? parseFloat(form.lng) : null,
+      certificado_energetico: form.certificado_energetico || null,
     };
 
     const url = isEdit
@@ -272,6 +281,18 @@ export default function PropiedadForm({ propiedad, locale }: Props) {
             <label className={labelClass}>Dirección</label>
             <input value={form.direccion} onChange={(e) => set('direccion', e.target.value)}
               className={inputClass} placeholder="Av. Costa Blanca, Alicante" />
+          </div>
+          <div>
+            <label className={labelClass}>Certificado energético</label>
+            <select
+              value={form.certificado_energetico}
+              onChange={(e) => set('certificado_energetico', e.target.value)}
+              className={inputClass}
+            >
+              {CERTIFICADOS.map((c) => (
+                <option key={c.value} value={c.value}>{c.label}</option>
+              ))}
+            </select>
           </div>
           <div className="flex items-center gap-3 self-end pb-2">
             <input type="checkbox" id="destacada" checked={form.destacada}

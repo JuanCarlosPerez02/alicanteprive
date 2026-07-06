@@ -1,17 +1,19 @@
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createPublicClient } from '@/lib/supabase/public';
+import { routing } from '@/i18n/routing';
 
 export const revalidate = 3600; // regenerate every hour
-import { getLocalizedText, formatPrice } from '@/lib/utils';
+import { getLocalizedText, formatPrice, WHATSAPP_PHONE } from '@/lib/utils';
 import PropertyGallery from '@/components/public/PropertyGallery';
 import PropertyMap from '@/components/public/PropertyMap';
 import ContactForm from '@/components/public/ContactForm';
+import ViewTracker from '@/components/public/ViewTracker';
 import {
-  Bed, Bath, Maximize2, MapPin, Tag,
+  Bed, Bath, Maximize2, MapPin, Tag, MessageCircle,
   ArrowUpDown, Waves, Car, Leaf, Wind, Flame,
   Package, Shield, Eye, Anchor, Sofa, LayoutGrid,
-  Sun, Sparkles, type LucideIcon,
+  Sun, Sparkles, Zap, type LucideIcon,
 } from 'lucide-react';
 import type { Metadata } from 'next';
 import type { Propiedad } from '@/types';
@@ -39,6 +41,12 @@ export async function generateMetadata({
   return {
     title: titulo,
     description: descripcion.substring(0, 160),
+    alternates: {
+      canonical: `/${locale}/propiedades/${referencia}`,
+      languages: Object.fromEntries(
+        routing.locales.map((l) => [l, `/${l}/propiedades/${referencia}`])
+      ),
+    },
     openGraph: {
       title: titulo,
       description: descripcion.substring(0, 160),
@@ -108,8 +116,49 @@ export default async function PropiedadPage({
 
   const isSold = ['vendida', 'alquilada'].includes(propiedad.estado);
 
+  // Structured data for search engines (schema.org RealEstateListing)
+  const fotosOrdenadas = [...(propiedad.propiedad_fotos ?? [])]
+    .sort((a, b) => Number(b.es_portada) - Number(a.es_portada) || a.orden - b.orden);
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: titulo,
+    description: descripcion.substring(0, 300),
+    url: `${siteUrl}/${locale}/propiedades/${propiedad.referencia}`,
+    image: fotosOrdenadas.slice(0, 5).map((f) => f.url),
+    offers: {
+      '@type': 'Offer',
+      price: propiedad.precio,
+      priceCurrency: 'EUR',
+      availability: propiedad.estado === 'disponible'
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/SoldOut',
+    },
+    ...(propiedad.zona && {
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: propiedad.zona,
+        addressRegion: 'Alicante',
+        addressCountry: 'ES',
+      },
+    }),
+    ...(propiedad.lat != null && propiedad.lng != null && {
+      geo: { '@type': 'GeoCoordinates', latitude: propiedad.lat, longitude: propiedad.lng },
+    }),
+    ...(propiedad.habitaciones != null && { numberOfRooms: propiedad.habitaciones }),
+    ...(propiedad.metros != null && {
+      floorSize: { '@type': 'QuantitativeValue', value: propiedad.metros, unitCode: 'MTK' },
+    }),
+  };
+
   return (
     <article className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ViewTracker propiedadId={propiedad.id} />
       {/* Breadcrumb */}
       <nav className="text-sm text-muted-foreground mb-6 flex items-center gap-2">
         <a href={`/${locale}/propiedades`} className="hover:text-gold transition-colors">
@@ -195,6 +244,21 @@ export default async function PropiedadPage({
                 <span className="font-medium">{propiedad.zona}</span>
               </div>
             )}
+            {propiedad.certificado_energetico && (
+              <div className="flex justify-between py-1">
+                <span className="text-muted-foreground flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5" />
+                  {t('energy_cert')}
+                </span>
+                <span className="font-medium">
+                  {propiedad.certificado_energetico === 'en_tramite'
+                    ? t('energy_en_tramite')
+                    : propiedad.certificado_energetico === 'exento'
+                      ? t('energy_exento')
+                      : propiedad.certificado_energetico}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Description */}
@@ -249,6 +313,17 @@ export default async function PropiedadPage({
             </p>
             <h3 className="font-heading text-xl font-semibold mb-1">{t('contact_title')}</h3>
             <p className="text-sm text-muted-foreground mb-6">{t('contact_subtitle')}</p>
+            <a
+              href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(
+                t('whatsapp_msg', { ref: propiedad.referencia, title: titulo })
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-3 mb-5 bg-[#25D366] text-white font-semibold rounded-sm text-sm hover:opacity-90 transition-opacity"
+            >
+              <MessageCircle className="w-4 h-4" />
+              {t('whatsapp_cta')}
+            </a>
             <ContactForm propiedadId={propiedad.id} propiedadReferencia={propiedad.referencia} />
           </div>
         </div>

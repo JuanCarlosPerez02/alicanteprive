@@ -80,7 +80,8 @@ export default function FilterBar() {
       const next = new URLSearchParams(params.toString());
       if (value) next.set(key, value);
       else next.delete(key);
-      // preserve vista param
+      // Changing any filter restarts pagination; `vista` is preserved.
+      next.delete('page');
       router.replace(`${pathname}?${next.toString()}`, { scroll: false });
     },
     [params, pathname, router]

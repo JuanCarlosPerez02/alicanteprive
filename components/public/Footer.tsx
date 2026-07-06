@@ -29,6 +29,7 @@ export default function Footer() {
               {[
                 { href: '/', label: t('home') },
                 { href: '/propiedades', label: t('properties') },
+                { href: '/vender', label: t('sell') },
                 { href: '/contacto', label: t('contact') },
               ].map((link) => (
                 <Link

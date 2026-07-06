@@ -3,7 +3,8 @@
     "home": "Home",
     "properties": "Properties",
     "contact": "Contact",
-    "admin": "Admin"
+    "admin": "Admin",
+    "sell": "Sell"
   },
   "home": {
     "hero": {
@@ -63,7 +64,10 @@
       "alquilada": "Rented",
       "reservada": "Reserved",
       "disponible": "Available"
-    }
+    },
+    "prev": "Previous",
+    "next": "Next",
+    "page_info": "Page {page} of {total}"
   },
   "property": {
     "details": "Details",
@@ -83,7 +87,12 @@
     "gallery": "Photo gallery",
     "sold_label": "Sold",
     "rented_label": "Rented",
-    "reserved_label": "Reserved"
+    "reserved_label": "Reserved",
+    "whatsapp_cta": "Ask via WhatsApp",
+    "whatsapp_msg": "Hello, I am interested in property {ref} — {title}. Could you give me more information?",
+    "energy_cert": "Energy certificate",
+    "energy_en_tramite": "In progress",
+    "energy_exento": "Exempt"
   },
   "contact": {
     "title": "Contact",
@@ -101,7 +110,8 @@
     "email_invalid": "Please enter a valid email",
     "privacy_before": "By checking this box, I declare that I have read and accept the",
     "privacy_link": "Privacy Policy",
-    "privacy_required": "You must accept the Privacy Policy to send the form"
+    "privacy_required": "You must accept the Privacy Policy to send the form",
+    "whatsapp_cta": "Open chat"
   },
   "admin": {
     "login_title": "Admin Access",
@@ -230,5 +240,28 @@
     "s6_contact_post": ").",
     "s7_title": "7. Security",
     "s7_body": "We have implemented the necessary technical and organisational measures to ensure the security and integrity of the personal data we process, and to prevent its loss, alteration and/or access by unauthorised third parties."
+  },
+  "sell": {
+    "meta_title": "Sell your property — Free valuation",
+    "meta_description": "Sell your property in Alicante and the Costa Blanca with Alicante Privé. Free valuation, premium marketing and international buyers.",
+    "eyebrow": "Sell with us",
+    "title": "Sell your property on the Costa Blanca",
+    "subtitle": "Free, no-obligation valuation. Absolute discretion, premium marketing and access to national and international buyers.",
+    "benefit1_title": "Free professional valuation",
+    "benefit1_body": "We analyse your property and your local market to set the optimal sale price, with no obligation whatsoever.",
+    "benefit2_title": "Premium marketing",
+    "benefit2_body": "Professional photography, polished presentation and exposure on our website and the main property portals.",
+    "benefit3_title": "International buyers",
+    "benefit3_body": "We work in four languages with an active portfolio of national and international buyers.",
+    "form_title": "Request your free valuation",
+    "form_subtitle": "Tell us about your property and we will contact you within 24 hours.",
+    "address": "Property address or area",
+    "address_placeholder": "E.g.: Cabo de las Huertas, Alicante",
+    "type": "Property type",
+    "sqm": "Approximate size (m²)",
+    "details": "Tell us more (optional)",
+    "details_placeholder": "Condition, renovations, year built...",
+    "send": "Request valuation",
+    "success": "Request received! We will contact you within 24 hours."
   }
 }

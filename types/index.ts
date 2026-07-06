@@ -7,7 +7,12 @@ export type PropiedadEstado =
   | 'alquilada'
   | 'oculta';
 
-export type OrigenLead = 'web' | 'idealista' | 'fotocasa' | 'manual' | 'otro';
+export type OrigenLead = 'web' | 'idealista' | 'fotocasa' | 'manual' | 'otro' | 'vendedor';
+
+export type CertificadoEnergetico =
+  | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+  | 'en_tramite'
+  | 'exento';
 
 export type InteresEstado =
   | 'nuevo'
@@ -45,6 +50,7 @@ export interface Propiedad {
   caracteristicas: string[];
   estado: PropiedadEstado;
   destacada: boolean;
+  certificado_energetico: CertificadoEnergetico | null;
   referencia_idealista: string | null;
   referencia_fotocasa: string | null;
   created_at: string;
@@ -77,6 +83,7 @@ export interface Contacto {
   origen: OrigenLead;
   notas: string | null;
   preferencias: PreferenciasContacto;
+  acepta_privacidad_at: string | null;
   created_at: string;
   updated_at: string;
 }

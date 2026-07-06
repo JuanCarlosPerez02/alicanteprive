@@ -15,6 +15,7 @@ const PUBLIC_NAMESPACES = [
   'types',
   'operations',
   'contact',
+  'sell',
 ] as const;
 
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {

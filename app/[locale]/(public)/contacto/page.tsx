@@ -1,6 +1,8 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import ContactForm from '@/components/public/ContactForm';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { routing } from '@/i18n/routing';
+import { WHATSAPP_PHONE } from '@/lib/utils';
+import { Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
 import type { Metadata } from 'next';
 
 const MAPS_URL =
@@ -14,7 +16,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'meta' });
-  return { title: t('contact_title') };
+  return {
+    title: t('contact_title'),
+    alternates: {
+      canonical: `/${locale}/contacto`,
+      languages: Object.fromEntries(routing.locales.map((l) => [l, `/${l}/contacto`])),
+    },
+  };
 }
 
 export default async function ContactoPage({
@@ -23,6 +31,7 @@ export default async function ContactoPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'contact' });
 
   return (
@@ -55,6 +64,20 @@ export default async function ContactoPage({
               <p className="text-xs tracking-widest uppercase text-muted-foreground mb-1 font-sans">Teléfono</p>
               <a href="tel:+34603248668" className="text-sm hover:text-gold transition-colors">
                 +34 603 248 668
+              </a>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <MessageCircle className="w-4 h-4 text-gold mt-0.5 shrink-0" />
+            <div>
+              <p className="text-xs tracking-widest uppercase text-muted-foreground mb-1 font-sans">WhatsApp</p>
+              <a
+                href={`https://wa.me/${WHATSAPP_PHONE}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm hover:text-gold transition-colors"
+              >
+                {t('whatsapp_cta')}
               </a>
             </div>
           </div>

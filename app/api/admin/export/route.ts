@@ -12,7 +12,8 @@ function cell(v: unknown): string {
 const HEADERS = [
   'referencia', 'operacion', 'tipo', 'titulo', 'descripcion', 'precio',
   'zona', 'direccion', 'lat', 'lng', 'metros', 'habitaciones', 'banos',
-  'caracteristicas', 'estado', 'destacada', 'referencia_idealista', 'fotos',
+  'caracteristicas', 'certificado_energetico', 'estado', 'destacada',
+  'referencia_idealista', 'fotos',
 ];
 
 export async function GET(req: NextRequest) {
@@ -49,7 +50,7 @@ export async function GET(req: NextRequest) {
     return [
       p.referencia, p.operacion, p.tipo, titulo, descripcion, p.precio,
       p.zona, p.direccion, p.lat, p.lng, p.metros, p.habitaciones, p.banos,
-      caracteristicas, p.estado, p.destacada ? 'sí' : 'no',
+      caracteristicas, p.certificado_energetico, p.estado, p.destacada ? 'sí' : 'no',
       p.referencia_idealista, fotos.join(' | '),
     ].map(cell).join(';');
   });

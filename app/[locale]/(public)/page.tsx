@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
 import { createPublicClient } from '@/lib/supabase/public';
 
 export const revalidate = 300; // regenerate every 5 minutes
@@ -16,7 +17,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'meta' });
-  return { title: t('home_title'), description: t('home_description') };
+  return {
+    title: t('home_title'),
+    description: t('home_description'),
+    alternates: {
+      canonical: `/${locale}`,
+      languages: Object.fromEntries(routing.locales.map((l) => [l, `/${l}`])),
+    },
+  };
 }
 
 export default async function HomePage({

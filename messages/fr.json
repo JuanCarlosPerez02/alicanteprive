@@ -3,7 +3,8 @@
     "home": "Accueil",
     "properties": "Propriétés",
     "contact": "Contact",
-    "admin": "Admin"
+    "admin": "Admin",
+    "sell": "Vendre"
   },
   "home": {
     "hero": {
@@ -63,7 +64,10 @@
       "alquilada": "Louée",
       "reservada": "Réservée",
       "disponible": "Disponible"
-    }
+    },
+    "prev": "Précédent",
+    "next": "Suivant",
+    "page_info": "Page {page} sur {total}"
   },
   "property": {
     "details": "Détails",
@@ -83,7 +87,12 @@
     "gallery": "Galerie photos",
     "sold_label": "Vendue",
     "rented_label": "Louée",
-    "reserved_label": "Réservée"
+    "reserved_label": "Réservée",
+    "whatsapp_cta": "Contacter par WhatsApp",
+    "whatsapp_msg": "Bonjour, je suis intéressé(e) par la propriété {ref} — {title}. Pourriez-vous me donner plus d’informations ?",
+    "energy_cert": "Certificat énergétique",
+    "energy_en_tramite": "En cours",
+    "energy_exento": "Exempté"
   },
   "contact": {
     "title": "Contact",
@@ -101,7 +110,8 @@
     "email_invalid": "Veuillez saisir un e-mail valide",
     "privacy_before": "En cochant cette case, je déclare avoir lu et accepter la",
     "privacy_link": "Politique de confidentialité",
-    "privacy_required": "Vous devez accepter la Politique de confidentialité pour envoyer le formulaire"
+    "privacy_required": "Vous devez accepter la Politique de confidentialité pour envoyer le formulaire",
+    "whatsapp_cta": "Ouvrir le chat"
   },
   "admin": {
     "login_title": "Accès Admin",
@@ -230,5 +240,28 @@
     "s6_contact_post": ").",
     "s7_title": "7. Sécurité",
     "s7_body": "Nous avons mis en place les mesures techniques et organisationnelles nécessaires pour garantir la sécurité et l'intégrité des données personnelles que nous traitons, ainsi que pour éviter leur perte, altération et/ou accès par des tiers non autorisés."
+  },
+  "sell": {
+    "meta_title": "Vendez votre propriété — Estimation gratuite",
+    "meta_description": "Vendez votre propriété à Alicante et sur la Costa Blanca avec Alicante Privé. Estimation gratuite, marketing premium et acheteurs internationaux.",
+    "eyebrow": "Vendez avec nous",
+    "title": "Vendez votre propriété sur la Costa Blanca",
+    "subtitle": "Estimation gratuite et sans engagement. Discrétion absolue, marketing premium et accès à des acheteurs nationaux et internationaux.",
+    "benefit1_title": "Estimation professionnelle gratuite",
+    "benefit1_body": "Nous analysons votre bien et le marché de votre secteur pour fixer le prix de vente optimal, sans aucun engagement.",
+    "benefit2_title": "Marketing premium",
+    "benefit2_body": "Photographie professionnelle, présentation soignée et diffusion sur notre site et les principaux portails immobiliers.",
+    "benefit3_title": "Acheteurs internationaux",
+    "benefit3_body": "Nous travaillons en quatre langues avec un portefeuille actif d’acheteurs nationaux et étrangers.",
+    "form_title": "Demandez votre estimation gratuite",
+    "form_subtitle": "Parlez-nous de votre bien et nous vous contacterons sous 24 heures.",
+    "address": "Adresse ou secteur du bien",
+    "address_placeholder": "Ex. : Cabo de las Huertas, Alicante",
+    "type": "Type de bien",
+    "sqm": "Surface approximative (m²)",
+    "details": "Dites-nous en plus (optionnel)",
+    "details_placeholder": "État du bien, rénovations, année de construction...",
+    "send": "Demander une estimation",
+    "success": "Demande reçue ! Nous vous contacterons sous 24 heures."
   }
 }

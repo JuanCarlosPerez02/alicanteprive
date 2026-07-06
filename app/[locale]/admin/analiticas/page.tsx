@@ -27,17 +27,29 @@ export default async function AnaliticasPage({ params }: Props) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect(`/${locale}/admin/login`);
 
+  // Views window: last 30 days. Computed in a Server Component — runs once
+  // per request on the server, not during React reconciliation.
+  // eslint-disable-next-line react-hooks/purity
+  const desde30 = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
+
   // Fetch all data in parallel
   const [
     { data: propiedades },
     { data: contactos },
     { data: intereses },
     { count: mensajesSinLeer },
+    { data: visitasRaw },
   ] = await Promise.all([
     supabase.from('propiedades').select('id, estado, tipo, operacion, precio, created_at'),
     supabase.from('contactos').select('id, origen, created_at'),
     supabase.from('interes_propiedad').select('id, estado, origen, created_at'),
     supabase.from('mensajes').select('*', { count: 'exact', head: true }).eq('leido', false),
+    supabase
+      .from('propiedad_visitas')
+      .select('visitas, propiedad:propiedades(referencia, titulo)')
+      .gte('dia', desde30),
   ]);
 
   const props = propiedades ?? [];
@@ -93,6 +105,26 @@ export default async function AnaliticasPage({ params }: Props) {
   const disponibles = props.filter((p) => (p as { estado: string }).estado === 'disponible');
   const valorDisponible = disponibles.reduce((sum, p) => sum + ((p as { precio: number }).precio ?? 0), 0);
 
+  // Most viewed properties (last 30 days) — aggregate daily rows per property
+  type VisitaRow = {
+    visitas: number;
+    propiedad: { referencia: string; titulo: Record<string, string> } | null;
+  };
+  const vistasPorProp = new Map<string, { referencia: string; titulo: string; total: number }>();
+  ((visitasRaw as unknown as VisitaRow[]) ?? []).forEach((v) => {
+    if (!v.propiedad) return;
+    const key = v.propiedad.referencia;
+    const cur = vistasPorProp.get(key);
+    if (cur) cur.total += v.visitas;
+    else
+      vistasPorProp.set(key, {
+        referencia: key,
+        titulo: v.propiedad.titulo?.es ?? key,
+        total: v.visitas,
+      });
+  });
+  const masVistas = [...vistasPorProp.values()].sort((a, b) => b.total - a.total).slice(0, 8);
+
   const analyticsData: AnalyticsData = {
     totals: {
       propiedades: props.length,
@@ -119,6 +151,38 @@ export default async function AnaliticasPage({ params }: Props) {
       </div>
 
       <AnalyticsCharts data={analyticsData} />
+
+      {/* Most viewed properties (web) — last 30 days */}
+      <div className="mt-6 bg-card border border-border rounded-sm overflow-hidden">
+        <div className="px-5 py-4 border-b border-border">
+          <h2 className="font-heading text-base font-semibold">
+            Propiedades más vistas en la web
+            <span className="ml-2 text-muted-foreground font-normal text-sm">(últimos 30 días)</span>
+          </h2>
+        </div>
+        {masVistas.length === 0 ? (
+          <p className="px-5 py-8 text-sm text-muted-foreground text-center">
+            Aún no hay visitas registradas.
+          </p>
+        ) : (
+          <table className="w-full text-sm">
+            <tbody>
+              {masVistas.map((v, i) => (
+                <tr key={v.referencia} className="border-b border-border last:border-0">
+                  <td className="px-5 py-3 text-muted-foreground w-8 tabular-nums">{i + 1}</td>
+                  <td className="px-2 py-3">
+                    <span className="font-medium">{v.titulo}</span>
+                    <span className="ml-2 text-xs text-muted-foreground">{v.referencia}</span>
+                  </td>
+                  <td className="px-5 py-3 text-right font-semibold tabular-nums">
+                    {v.total} {v.total === 1 ? 'visita' : 'visitas'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }

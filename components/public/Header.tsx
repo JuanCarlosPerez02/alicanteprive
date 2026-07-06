@@ -14,6 +14,7 @@ export default function Header() {
   const links = [
     { href: '/', label: t('home') },
     { href: '/propiedades', label: t('properties') },
+    { href: '/vender', label: t('sell') },
     { href: '/contacto', label: t('contact') },
   ];
 
