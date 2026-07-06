@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import type { Propiedad } from '@/types';
 
@@ -15,17 +15,26 @@ const HEADERS = [
   'caracteristicas', 'estado', 'destacada', 'referencia_idealista', 'fotos',
 ];
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
 
-  const { data, error } = await supabase
+  // ?id=<uuid> exports a single property; without it, all of them.
+  const id = req.nextUrl.searchParams.get('id');
+
+  let query = supabase
     .from('propiedades')
     .select('*, propiedad_fotos(url, orden, es_portada)')
     .order('referencia', { ascending: true });
+  if (id) query = query.eq('id', id);
+
+  const { data, error } = await query;
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (id && (!data || data.length === 0)) {
+    return NextResponse.json({ error: 'Propiedad no encontrada' }, { status: 404 });
+  }
 
   const rows = ((data as Propiedad[]) ?? []).map((p) => {
     const fotos = [...(p.propiedad_fotos ?? [])]
@@ -48,11 +57,14 @@ export async function GET() {
   // BOM + semicolons → opens correctly in Spanish-locale Excel.
   const csv = '\uFEFF' + [HEADERS.map(cell).join(';'), ...rows].join('\r\n');
   const today = new Date().toISOString().slice(0, 10);
+  const filename = id
+    ? `propiedad-${(data as Propiedad[])[0].referencia}.csv`
+    : `propiedades-${today}.csv`;
 
   return new NextResponse(csv, {
     headers: {
       'Content-Type': 'text/csv; charset=utf-8',
-      'Content-Disposition': `attachment; filename="propiedades-${today}.csv"`,
+      'Content-Disposition': `attachment; filename="${filename}"`,
       'Cache-Control': 'no-store',
     },
   });

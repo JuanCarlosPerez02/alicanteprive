@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { buscarClientesPotenciales } from '@/lib/matching';
 import Link from 'next/link';
-import { ArrowLeft, Pencil } from 'lucide-react';
+import { ArrowLeft, Pencil, Download } from 'lucide-react';
 import PropiedadResumen from '@/components/admin/PropiedadResumen';
 import InteresadosSection from '@/components/admin/InteresadosSection';
 import MatchingTab from '@/components/admin/MatchingTab';
@@ -76,6 +76,14 @@ export default async function PropiedadDetailPage({ params, searchParams }: Prop
           <h1 className="font-heading text-2xl font-bold line-clamp-2">{titulo}</h1>
         </div>
         <div className="flex items-center gap-2 mt-1">
+          <a
+            href={`/api/admin/export?id=${id}`}
+            download
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold border border-border rounded-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Exportar CSV
+          </a>
           <Link
             href={`/${locale}/admin/propiedades/${id}/editar`}
             className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold border border-border rounded-sm text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
