@@ -50,15 +50,18 @@ export default function SearchSelect({
       )
     : options;
 
+  // Viewport coords for a position:fixed portal. The admin shell scrolls an
+  // inner container (window never scrolls), so document coords would leave the
+  // panel stranded on screen while the trigger scrolls away.
+  function computePos(): DropdownPos | null {
+    const r = containerRef.current?.getBoundingClientRect();
+    return r ? { top: r.bottom + 4, left: r.left, width: r.width } : null;
+  }
+
   function openDropdown() {
-    if (!containerRef.current) return;
-    const r = containerRef.current.getBoundingClientRect();
-    // Use scrollY/scrollX to convert viewport coords → document coords for position:absolute in portal
-    setPos({
-      top: r.bottom + window.scrollY + 4,
-      left: r.left + window.scrollX,
-      width: r.width,
-    });
+    const p = computePos();
+    if (!p) return;
+    setPos(p);
     setOpen(true);
   }
 
@@ -90,6 +93,28 @@ export default function SearchSelect({
     if (open) setTimeout(() => inputRef.current?.focus(), 30);
   }, [open]);
 
+  // Keep the panel glued to the trigger while any ancestor scrolls or the
+  // window resizes. capture:true also catches inner scroll containers
+  // (the admin shell's <main> scrolls; the window itself never does).
+  useEffect(() => {
+    if (!open) return;
+    let raf = 0;
+    const update = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const p = computePos();
+        if (p) setPos(p);
+      });
+    };
+    window.addEventListener('scroll', update, true);
+    window.addEventListener('resize', update);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', update, true);
+      window.removeEventListener('resize', update);
+    };
+  }, [open]);
+
   function select(id: string) {
     onChange(id);
     closeDropdown();
@@ -99,7 +124,7 @@ export default function SearchSelect({
     <div
       ref={dropdownRef}
       style={{
-        position: 'absolute',
+        position: 'fixed',
         top: pos.top,
         left: pos.left,
         width: pos.width,

@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
-import { Plus, Pencil, Star, Eye } from 'lucide-react';
+import { Plus, Pencil, Star, Eye, Download } from 'lucide-react';
 import { getLocalizedText, formatPrice } from '@/lib/utils';
 import type { Propiedad } from '@/types';
 import PropiedadDeleteButton from '@/components/admin/PropiedadDeleteButton';
@@ -33,13 +33,23 @@ export default async function AdminPropiedadesPage({
           <h1 className="font-heading text-2xl font-semibold">Propiedades</h1>
           <p className="text-sm text-muted-foreground mt-0.5">{propiedades.length} en total</p>
         </div>
-        <Link
-          href="propiedades/nueva"
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-sm hover:opacity-90 transition-opacity"
-        >
-          <Plus className="w-4 h-4" />
-          Nueva propiedad
-        </Link>
+        <div className="flex items-center gap-2">
+          <a
+            href="/api/admin/export"
+            download
+            className="flex items-center gap-2 px-4 py-2 border border-border text-sm font-semibold rounded-sm hover:bg-muted transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            Exportar CSV
+          </a>
+          <Link
+            href="propiedades/nueva"
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-sm hover:opacity-90 transition-opacity"
+          >
+            <Plus className="w-4 h-4" />
+            Nueva propiedad
+          </Link>
+        </div>
       </div>
 
       {/* Filters */}
